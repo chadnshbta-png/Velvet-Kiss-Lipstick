@@ -12,7 +12,7 @@ export default function CTASection() {
   const preRef = useRef<HTMLParagraphElement>(null);
   const line1Ref = useRef<HTMLDivElement>(null);
   const line2Ref = useRef<HTMLDivElement>(null);
-  const line3Ref = useRef<HTMLDivElement>(null);
+  const line3Ref = useRef<HTMLDivElement>(null);h
   const ctaGroupRef = useRef<HTMLDivElement>(null);
   const decorRef = useRef<HTMLDivElement>(null);
 
@@ -72,7 +72,7 @@ export default function CTASection() {
       });
 
       tl.fromTo(
-        ctaGroupRef.current?.children,
+        ctaGroupRef.current ? Array.from(ctaGroupRef.current.children) : [],
         { y: 30, opacity: 0 },
         {
           y: 0,
