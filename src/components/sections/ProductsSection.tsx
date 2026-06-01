@@ -58,7 +58,7 @@ export default function ProductsSection() {
     const ctx = gsap.context(() => {
       /* ── Header ── */
       gsap.fromTo(
-        headerRef.current?.querySelectorAll(".ph-word"),
+        headerRef.current ? Array.from(headerRef.current.querySelectorAll(".ph-word")) : [],
         { y: "110%", opacity: 0 },
         {
           y: "0%",
