@@ -71,7 +71,7 @@ export default function TestimonialsSection() {
     const ctx = gsap.context(() => {
       /* ── Header ── */
       gsap.fromTo(
-        headerRef.current?.querySelectorAll(".tm-word"),
+        headerRef.current ? Array.from(headerRef.current.querySelectorAll(".tm-word")) : [],
         { y: "110%", opacity: 0 },
         {
           y: "0%",
