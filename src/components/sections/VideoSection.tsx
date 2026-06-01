@@ -81,7 +81,7 @@ export default function VideoSection() {
 
       // Text reveal
       tl.fromTo(
-        textRevealRef.current?.querySelectorAll(".tr-word"),
+        textRevealRef.current ? Array.from(textRevealRef.current.querySelectorAll(".tr-word")) : [],
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, stagger: 0.05, duration: 0.3, ease: "power2.out" },
         "-=0.1"
