@@ -12,7 +12,7 @@ export default function CTASection() {
   const preRef = useRef<HTMLParagraphElement>(null);
   const line1Ref = useRef<HTMLDivElement>(null);
   const line2Ref = useRef<HTMLDivElement>(null);
-  const line3Ref = useRef<HTMLDivElement>(null);h
+  const line3Ref = useRef<HTMLDivElement>(null);
   const ctaGroupRef = useRef<HTMLDivElement>(null);
   const decorRef = useRef<HTMLDivElement>(null);
 
