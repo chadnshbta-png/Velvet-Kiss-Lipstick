@@ -179,36 +179,11 @@ export default function ProductsSection() {
       style={{ backgroundColor: "var(--color-black)" }}
     >
       {/* Header */}
-      <div
-        style={{
-          padding:
-            "clamp(5rem,8vh,7rem) clamp(1.5rem,5vw,5rem) clamp(2.5rem,4vh,4rem)",
-        }}
-      >
-        <div className="flex items-center gap-6 mb-10">
-          <div
-            className="font-display italic"
-            style={{
-              fontSize: "clamp(2rem, 4vw, 3.5rem)",
-              color: "rgba(201,168,152,0.2)",
-              lineHeight: 1,
-            }}
-          >
-            03
-          </div>
-          <div
-            className="flex-1 h-px"
-            style={{
-              background:
-                "linear-gradient(to right, var(--color-gold), transparent)",
-            }}
-          />
-          <p
-            className="text-xs tracking-[0.4em] uppercase font-accent"
-            style={{ color: "var(--color-gold)", fontWeight: 300 }}
-          >
-            The Collection
-          </p>
+      <div className="vk-section-header">
+        <div className="vk-strip">
+          <span className="vk-strip-num">03</span>
+          <div className="vk-strip-line" />
+          <span className="vk-strip-label">The Collection</span>
         </div>
 
         <div ref={headerRef}>
@@ -217,7 +192,7 @@ export default function ProductsSection() {
               <div
                 className="ph-word font-display italic"
                 style={{
-                  fontSize: "clamp(3rem, 8vw, 9rem)",
+                  fontSize: "var(--t-display)",
                   lineHeight: 0.95,
                   color:
                     i === 1 ? "var(--color-gold)" : "var(--color-ivory)",
@@ -240,19 +215,12 @@ export default function ProductsSection() {
           perspective: "1200px",
         }}
       >
-        {/* Atmospheric glow */}
+        {/* Subtle stage accent */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse 65% 55% at 50% 50%, rgba(201,168,152,0.04) 0%, transparent 70%)",
-          }}
-        />
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse 90% 60% at 50% 110%, rgba(23,14,28,0.7) 0%, transparent 55%)",
+              "radial-gradient(ellipse 65% 55% at 50% 40%, rgba(80,16,34,0.07) 0%, transparent 70%)",
           }}
         />
 

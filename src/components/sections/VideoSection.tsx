@@ -124,36 +124,11 @@ export default function VideoSection() {
       style={{ backgroundColor: "var(--color-black)" }}
     >
       {/* Section header */}
-      <div
-        style={{
-          padding:
-            "clamp(5rem,8vh,7rem) clamp(1.5rem,5vw,5rem) clamp(2.5rem,4vh,4rem)",
-        }}
-      >
-        <div className="flex items-center gap-6 mb-10">
-          <div
-            className="font-display italic"
-            style={{
-              fontSize: "clamp(2rem, 4vw, 3.5rem)",
-              color: "rgba(201,168,152,0.2)",
-              lineHeight: 1,
-            }}
-          >
-            04
-          </div>
-          <div
-            className="flex-1 h-px"
-            style={{
-              background:
-                "linear-gradient(to right, var(--color-gold), transparent)",
-            }}
-          />
-          <p
-            className="text-xs tracking-[0.4em] uppercase font-accent"
-            style={{ color: "var(--color-gold)", fontWeight: 300 }}
-          >
-            The Film
-          </p>
+      <div className="vk-section-header">
+        <div className="vk-strip">
+          <span className="vk-strip-num">04</span>
+          <div className="vk-strip-line" />
+          <span className="vk-strip-label">The Film</span>
         </div>
 
         <div aria-label="The Story Unfolds">
@@ -162,7 +137,7 @@ export default function VideoSection() {
               <div
                 className="vs-word font-display italic"
                 style={{
-                  fontSize: "clamp(3rem, 8vw, 9rem)",
+                  fontSize: "var(--t-display)",
                   lineHeight: 0.95,
                   color:
                     i === 1 ? "var(--color-gold)" : "var(--color-ivory)",
@@ -182,19 +157,12 @@ export default function VideoSection() {
         className="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden"
         style={{ backgroundColor: "var(--color-deep)" }}
       >
-        {/* Atmospheric glow */}
+        {/* Cinematic centre focus — single minimal glow */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse 55% 45% at 50% 50%, rgba(139,0,0,0.09) 0%, transparent 70%)",
-          }}
-        />
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse 100% 50% at 50% 110%, rgba(23,14,28,0.8) 0%, transparent 55%)",
+              "radial-gradient(ellipse 70% 55% at 50% 50%, rgba(70,14,30,0.08) 0%, transparent 70%)",
           }}
         />
 

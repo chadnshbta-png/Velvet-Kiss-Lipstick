@@ -8,6 +8,8 @@ interface MagneticButtonProps {
   className?: string;
   style?: React.CSSProperties;
   onClick?: () => void;
+  onMouseEnter?: React.MouseEventHandler<HTMLButtonElement>;
+  onMouseLeave?: React.MouseEventHandler<HTMLButtonElement>;
   strength?: number;
 }
 
@@ -16,6 +18,8 @@ export default function MagneticButton({
   className = "",
   style,
   onClick,
+  onMouseEnter,
+  onMouseLeave,
   strength = 0.4,
 }: MagneticButtonProps) {
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -47,7 +51,14 @@ export default function MagneticButton({
   }, [strength]);
 
   return (
-    <button ref={buttonRef} onClick={onClick} className={className} style={style}>
+    <button
+      ref={buttonRef}
+      onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      className={className}
+      style={style}
+    >
       {children}
     </button>
   );

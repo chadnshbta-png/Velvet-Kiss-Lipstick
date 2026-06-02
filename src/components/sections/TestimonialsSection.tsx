@@ -190,53 +190,21 @@ export default function TestimonialsSection() {
       className="relative overflow-hidden"
       style={{ backgroundColor: "var(--color-black)", minHeight: "100vh" }}
     >
-      {/* Atmospheric background */}
+      {/* Subtle warm accent — mauve glow at right, barely perceptible */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 65% 45% at 70% 50%, rgba(122,69,88,0.07) 0%, transparent 70%)",
-        }}
-      />
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 50% 40% at 20% 80%, rgba(46,16,32,0.2) 0%, transparent 60%)",
+            "radial-gradient(ellipse 65% 45% at 70% 50%, rgba(100,38,60,0.07) 0%, transparent 70%)",
         }}
       />
 
       {/* Section header */}
-      <div
-        style={{
-          padding:
-            "clamp(5rem,8vh,7rem) clamp(1.5rem,5vw,5rem) clamp(2.5rem,4vh,4rem)",
-        }}
-      >
-        <div className="flex items-center gap-6 mb-10">
-          <div
-            className="font-display italic"
-            style={{
-              fontSize: "clamp(2rem, 4vw, 3.5rem)",
-              color: "rgba(201,168,152,0.2)",
-              lineHeight: 1,
-            }}
-          >
-            05
-          </div>
-          <div
-            className="flex-1 h-px"
-            style={{
-              background:
-                "linear-gradient(to right, var(--color-gold), transparent)",
-            }}
-          />
-          <p
-            className="text-xs tracking-[0.4em] uppercase font-accent"
-            style={{ color: "var(--color-gold)", fontWeight: 300 }}
-          >
-            Voices
-          </p>
+      <div className="vk-section-header">
+        <div className="vk-strip">
+          <span className="vk-strip-num">05</span>
+          <div className="vk-strip-line" />
+          <span className="vk-strip-label">Voices</span>
         </div>
 
         <div ref={headerRef} aria-label="They Speak">
@@ -245,7 +213,7 @@ export default function TestimonialsSection() {
               <div
                 className="tm-word font-display italic"
                 style={{
-                  fontSize: "clamp(3rem, 8vw, 9rem)",
+                  fontSize: "var(--t-display)",
                   lineHeight: 0.95,
                   color:
                     i === 1 ? "var(--color-rose)" : "var(--color-ivory)",
@@ -335,11 +303,13 @@ export default function TestimonialsSection() {
               }}
             >
               <div
-                className="card-inner p-8 flex flex-col gap-5 border relative overflow-hidden"
+                className="card-inner flex flex-col border relative overflow-hidden"
                 style={{
                   backgroundColor: "rgba(13,9,16,0.96)",
                   borderColor: "rgba(201,168,152,0.14)",
                   backdropFilter: "blur(12px)",
+                  padding: "clamp(2rem, 3.5vw, 3rem)",
+                  gap: "var(--sp-4)",                   /* 32px — clear breathing between each element */
                 }}
               >
                 {/* Ambient quote mark */}
@@ -374,7 +344,7 @@ export default function TestimonialsSection() {
                   className="inline-flex items-center gap-2 self-start"
                   style={{
                     border: "1px solid rgba(201,168,152,0.2)",
-                    padding: "4px 14px",
+                    padding: "7px 18px",
                   }}
                 >
                   <span
@@ -387,8 +357,8 @@ export default function TestimonialsSection() {
 
                 {/* Author */}
                 <div
-                  className="flex items-center gap-4 pt-4 border-t"
-                  style={{ borderColor: "rgba(201,168,152,0.1)" }}
+                  className="flex items-center gap-4 border-t"
+                  style={{ borderColor: "rgba(201,168,152,0.1)", paddingTop: "var(--sp-3)" }}
                 >
                   <div
                     className="w-9 h-9 rounded-full flex items-center justify-center border font-display italic flex-shrink-0"

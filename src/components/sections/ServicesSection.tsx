@@ -169,59 +169,29 @@ export default function ServicesSection() {
       style={{ backgroundColor: "var(--color-black)" }}
     >
       {/* Section header — sits above pinned stage */}
-      <div
-        className="container mx-auto max-w-7xl pt-28 pb-16 md:pt-36 md:pb-20"
-        style={{ padding: "clamp(5rem,8vw,7rem) clamp(1.5rem,5vw,5rem) clamp(3rem,5vw,4rem)' " }}
-      >
-        <div
-          style={{
-            padding: "clamp(5rem,8vh,7rem) clamp(1.5rem,5vw,5rem) clamp(2.5rem,4vh,4rem)",
-          }}
-        >
-          <div className="flex items-center gap-6 mb-10">
-            <div
-              className="font-display italic"
-              style={{
-                fontSize: "clamp(2rem, 4vw, 3.5rem)",
-                color: "rgba(201,168,152,0.2)",
-                lineHeight: 1,
-              }}
-            >
-              02
-            </div>
-            <div
-              className="flex-1 h-px"
-              style={{
-                background:
-                  "linear-gradient(to right, var(--color-gold), transparent)",
-              }}
-            />
-            <p
-              className="text-xs tracking-[0.4em] uppercase font-accent"
-              style={{ color: "var(--color-gold)", fontWeight: 300 }}
-            >
-              Our Rituals
-            </p>
-          </div>
+      <div className="vk-section-header">
+        <div className="vk-strip">
+          <span className="vk-strip-num">02</span>
+          <div className="vk-strip-line" />
+          <span className="vk-strip-label">Our Rituals</span>
+        </div>
 
-          <div ref={headerRef} aria-label="The Velvet Rituals">
-            {["The Velvet", "Rituals"].map((word, i) => (
-              <div key={i} className="overflow-hidden">
-                <div
-                  className="h-word font-display italic"
-                  style={{
-                    fontSize: "clamp(3rem, 8vw, 9rem)",
-                    lineHeight: 0.95,
-                    color:
-                      i === 0 ? "var(--color-ivory)" : "var(--color-gold)",
-                    display: "block",
-                  }}
-                >
-                  {word}
-                </div>
+        <div ref={headerRef} aria-label="The Velvet Rituals">
+          {["The Velvet", "Rituals"].map((word, i) => (
+            <div key={i} className="overflow-hidden">
+              <div
+                className="h-word font-display italic"
+                style={{
+                  fontSize: "var(--t-display)",
+                  lineHeight: 0.95,
+                  color: i === 0 ? "var(--color-ivory)" : "var(--color-gold)",
+                  display: "block",
+                }}
+              >
+                {word}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -234,19 +204,12 @@ export default function ServicesSection() {
           perspective: "1400px",
         }}
       >
-        {/* Atmospheric radial glow */}
+        {/* Subtle stage accent — single soft centre glow */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse 55% 45% at 50% 50%, rgba(139,0,0,0.1) 0%, transparent 70%)",
-          }}
-        />
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse 80% 60% at 50% 100%, rgba(23,14,28,0.6) 0%, transparent 60%)",
+              "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(90,18,38,0.07) 0%, transparent 70%)",
           }}
         />
 

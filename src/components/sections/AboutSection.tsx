@@ -263,7 +263,7 @@ export default function AboutSection() {
           </div>
 
           {/* Permanent title */}
-          <div ref={titleRef} className="mb-10" aria-label="The Art of Desire">
+          <div ref={titleRef} className="mb-16" aria-label="The Art of Desire">
             {["The Art", "of", "Desire"].map((word, i) => (
               <div key={i} className="overflow-hidden">
                 <div
@@ -361,8 +361,13 @@ export default function AboutSection() {
           {/* Stats — at bottom of left panel */}
           <div
             ref={statsRef}
-            className="grid grid-cols-3 gap-6 pt-8 border-t"
-            style={{ borderColor: "rgba(201,168,152,0.1)" }}
+            className="grid grid-cols-3 border-t"
+            style={{
+              borderColor: "rgba(201,168,152,0.1)",
+              paddingTop: "clamp(1.5rem, 3vh, 2.5rem)",
+              gap: "clamp(1rem, 3vw, 2.5rem)",
+              marginTop: "clamp(1.5rem, 3vh, 2rem)",
+            }}
           >
             {[
               { value: "48", unit: "Shades", label: "Curated" },
@@ -370,6 +375,7 @@ export default function AboutSection() {
               { value: "99", unit: "%", label: "Natural" },
             ].map((stat) => (
               <div key={stat.label} className="stat-item opacity-0">
+                {/* Number + unit on separate lines for clean hierarchy */}
                 <div
                   className="font-display"
                   style={{
@@ -379,15 +385,29 @@ export default function AboutSection() {
                   }}
                 >
                   {stat.value}
-                  <span
-                    style={{ color: "var(--color-blush)", fontSize: "55%" }}
-                  >
-                    {stat.unit}
-                  </span>
                 </div>
                 <p
-                  className="text-xs tracking-[0.25em] uppercase font-accent mt-1"
-                  style={{ color: "rgba(237,213,200,0.4)", fontWeight: 300 }}
+                  className="font-accent"
+                  style={{
+                    fontSize: "var(--t-caption)",
+                    color: "var(--color-blush)",
+                    fontWeight: 300,
+                    letterSpacing: "0.12em",
+                    marginTop: "0.3rem",
+                    marginBottom: "0.25rem",
+                  }}
+                >
+                  {stat.unit}
+                </p>
+                <p
+                  className="font-accent"
+                  style={{
+                    fontSize: "var(--t-label)",
+                    letterSpacing: "0.3em",
+                    textTransform: "uppercase",
+                    color: "rgba(237,213,200,0.35)",
+                    fontWeight: 300,
+                  }}
                 >
                   {stat.label}
                 </p>

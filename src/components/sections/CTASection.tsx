@@ -117,24 +117,20 @@ export default function CTASection() {
     <section
       ref={sectionRef}
       id="cta"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden py-32"
-      style={{ backgroundColor: "var(--color-black)" }}
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
+      style={{
+        backgroundColor: "var(--color-black)",
+        paddingTop: "clamp(5rem, 8vh, 8rem)",
+        paddingBottom: "clamp(8rem, 14vh, 12rem)",   /* strong finish before footer */
+      }}
     >
-      {/* Background gradient pulse */}
+      {/* Premium finish — very soft centred glow that parallax-scales */}
       <div
         ref={bgRef}
         className="absolute inset-0 gpu"
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(139,0,0,0.15) 0%, rgba(10,6,8,0) 70%)",
-        }}
-      />
-
-      {/* Grain texture */}
-      <div
-        className="absolute inset-0 opacity-5 pointer-events-none"
-        style={{
-          backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)'/%3E%3C/svg%3E\")",
+            "radial-gradient(ellipse 70% 55% at 50% 50%, rgba(95,18,40,0.10) 0%, transparent 70%)",
         }}
       />
 
@@ -161,23 +157,22 @@ export default function CTASection() {
         />
       </div>
 
-      <div className="container mx-auto px-8 md:px-16 max-w-7xl relative z-10">
+      <div className="vk-container relative z-10">
         {/* Section number + line */}
-        <div className="flex items-center gap-6 mb-16">
+        <div className="flex items-center gap-6 mb-14">
           <div
             ref={numberRef}
-            className="font-display italic opacity-0"
-            style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "rgba(201,168,152,0.2)", lineHeight: 1 }}
+            className="vk-strip-num opacity-0"
           >
             06
           </div>
-          <div className="cta-line flex-1 h-px" style={{ background: "linear-gradient(to right, var(--color-gold), transparent)" }} />
+          <div className="cta-line vk-strip-line" />
         </div>
 
         {/* Pre-label */}
         <p
           ref={preRef}
-          className="text-xs tracking-[0.6em] uppercase font-accent mb-8 opacity-0"
+          className="text-xs tracking-[0.6em] uppercase font-accent mb-12 opacity-0"
           style={{ color: "var(--color-gold)", fontWeight: 300 }}
         >
           Your Signature Awaits
@@ -249,52 +244,64 @@ export default function CTASection() {
         {/* CTA group */}
         <div
           ref={ctaGroupRef}
-          className="mt-16 flex flex-col sm:flex-row items-center gap-6 md:justify-center"
+          className="mt-20 flex flex-col sm:flex-row items-center gap-6 md:justify-center"
         >
           <MagneticButton
-            className="relative overflow-hidden text-sm tracking-[0.35em] uppercase font-accent px-12 py-5 gpu"
-            style={{
-              backgroundColor: "var(--color-gold)",
-              color: "var(--color-black)",
-              fontWeight: 500,
-            } as React.CSSProperties}
+            className="vk-btn vk-btn-lg vk-btn-primary gpu"
+            style={{} as React.CSSProperties}
+            onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
+              gsap.to(e.currentTarget, {
+                backgroundColor: "var(--color-champagne)",
+                color: "var(--color-black)",
+                duration: 0.35,
+              });
+            }}
+            onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => {
+              gsap.to(e.currentTarget, {
+                backgroundColor: "var(--color-gold)",
+                color: "var(--color-black)",
+                duration: 0.35,
+              });
+            }}
           >
-            <span className="relative z-10">Shop the Collection</span>
-            <div
-              className="absolute inset-0 gpu"
-              style={{
-                background: "linear-gradient(135deg, var(--color-champagne) 0%, var(--color-gold) 50%, var(--color-crimson) 100%)",
-                opacity: 0,
-                transition: "opacity 0.4s ease",
-              }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.opacity = "1"; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.opacity = "0"; }}
-            />
+            Shop the Collection
           </MagneticButton>
 
           <MagneticButton
-            className="text-sm tracking-[0.35em] uppercase font-accent px-12 py-5 border"
-            style={{
-              borderColor: "rgba(201,168,152,0.4)",
-              color: "var(--color-champagne)",
-              fontWeight: 300,
-            } as React.CSSProperties}
+            className="vk-btn vk-btn-lg vk-btn-outline"
+            style={{} as React.CSSProperties}
+            onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
+              gsap.to(e.currentTarget, {
+                borderColor: "var(--color-gold)",
+                color: "var(--color-champagne)",
+                backgroundColor: "rgba(201,168,152,0.06)",
+                duration: 0.35,
+              });
+            }}
+            onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => {
+              gsap.to(e.currentTarget, {
+                borderColor: "rgba(201,168,152,0.38)",
+                color: "var(--color-champagne)",
+                backgroundColor: "transparent",
+                duration: 0.35,
+              });
+            }}
           >
             Book a Consultation
           </MagneticButton>
         </div>
 
-        {/* Bottom divider */}
-        <div className="cta-line mt-20 h-px w-full" style={{ background: "linear-gradient(to right, transparent, var(--color-gold), transparent)" }} />
+        {/* Bottom divider + promise line */}
+        <div className="cta-line h-px w-full" style={{ background: "linear-gradient(to right, transparent, var(--color-gold), transparent)", marginTop: "clamp(4rem, 6vw, 6rem)" }} />
 
-        <div className="mt-6 flex items-center justify-between">
-          <p className="text-xs tracking-[0.3em] uppercase font-accent" style={{ color: "rgba(245,230,200,0.25)", fontWeight: 300 }}>
+        <div className="flex items-center justify-between" style={{ marginTop: "var(--sp-4)" }}>
+          <p className="font-accent" style={{ fontSize: "var(--t-label)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,230,200,0.22)", fontWeight: 300 }}>
             Free worldwide shipping
           </p>
-          <p className="text-xs tracking-[0.3em] uppercase font-accent" style={{ color: "rgba(245,230,200,0.25)", fontWeight: 300 }}>
+          <p className="font-accent" style={{ fontSize: "var(--t-label)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,230,200,0.22)", fontWeight: 300 }}>
             Luxury packaging
           </p>
-          <p className="text-xs tracking-[0.3em] uppercase font-accent hidden md:block" style={{ color: "rgba(245,230,200,0.25)", fontWeight: 300 }}>
+          <p className="font-accent hidden md:block" style={{ fontSize: "var(--t-label)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,230,200,0.22)", fontWeight: 300 }}>
             30-day returns
           </p>
         </div>

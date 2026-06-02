@@ -35,7 +35,7 @@ export default function Navbar() {
         gsap.to(nav, {
           backgroundColor: "rgba(10, 6, 8, 0.92)",
           backdropFilter: "blur(12px)",
-          borderBottomColor: "rgba(201, 169, 110, 0.15)",
+          borderBottomColor: "rgba(201, 168, 152, 0.15)",
           duration: 0.4,
         });
       },
@@ -117,19 +117,22 @@ export default function Navbar() {
         </ul>
 
         <button
-          className="hidden md:flex items-center gap-2 text-xs tracking-[0.25em] uppercase font-accent px-6 py-3 border relative overflow-hidden group"
-          style={{
-            borderColor: "var(--color-gold)",
-            color: "var(--color-gold)",
-            fontWeight: 300,
-          }}
+          className="hidden md:flex vk-btn vk-btn-sm vk-btn-ghost"
           onMouseEnter={(e) => {
-            const btn = e.currentTarget;
-            gsap.to(btn, { backgroundColor: "var(--color-gold)", color: "var(--color-black)", duration: 0.3 });
+            gsap.to(e.currentTarget, {
+              backgroundColor: "var(--color-gold)",
+              color: "var(--color-black)",
+              borderColor: "var(--color-gold)",
+              duration: 0.35,
+            });
           }}
           onMouseLeave={(e) => {
-            const btn = e.currentTarget;
-            gsap.to(btn, { backgroundColor: "transparent", color: "var(--color-gold)", duration: 0.3 });
+            gsap.to(e.currentTarget, {
+              backgroundColor: "transparent",
+              color: "var(--color-gold)",
+              borderColor: "rgba(201,168,152,0.45)",
+              duration: 0.35,
+            });
           }}
         >
           Shop Now

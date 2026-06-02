@@ -8,9 +8,7 @@ const TOTAL_FRAMES = 240;
 const FRAME_PATH = (i: number) =>
   `/frame/First-${String(i).padStart(4, "0")}.png`;
 
-// Text appears when sequence reaches this frame (~94% progress)
-const TEXT_APPEAR_FRAME = 226;
-const TEXT_APPEAR_PROGRESS = TEXT_APPEAR_FRAME / TOTAL_FRAMES; // ~0.942
+// Text reveals at ~78–97% of hero scroll progress (near frame 226)
 
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -240,21 +238,21 @@ export default function HeroSection() {
         className="absolute inset-0 w-full h-full gpu"
       />
 
-      {/* Vignette — soft edge darkening */}
+      {/* Soft edge vignette — keeps canvas content centred and readable */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse at center, transparent 25%, rgba(8,5,8,0.70) 100%)",
+            "radial-gradient(ellipse at center, transparent 30%, rgba(7,4,7,0.65) 100%)",
         }}
       />
 
-      {/* Atmospheric top gradient */}
+      {/* Bottom fade — integrates hero into page scroll */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(46,16,32,0.3) 0%, transparent 30%, transparent 70%, rgba(8,5,8,0.5) 100%)",
+            "linear-gradient(to bottom, transparent 70%, rgba(7,4,7,0.55) 100%)",
         }}
       />
 
@@ -273,8 +271,8 @@ export default function HeroSection() {
         {/* Pre-headline tagline */}
         <p
           ref={taglineRef}
-          className="text-xs tracking-[0.5em] uppercase font-accent mb-8"
-          style={{ color: "var(--color-gold)", fontWeight: 300 }}
+          className="vk-strip-label mb-6"
+          style={{ color: "var(--color-gold)" }}
         >
           Maison de Beauté · Est. 2024
         </p>
@@ -284,7 +282,7 @@ export default function HeroSection() {
           <h1
             className="font-display italic leading-none"
             style={{
-              fontSize: "clamp(4rem, 13vw, 13rem)",
+              fontSize: "var(--t-hero)",
               color: "var(--color-ivory)",
               letterSpacing: "-0.02em",
               lineHeight: 0.9,
@@ -298,10 +296,14 @@ export default function HeroSection() {
         </div>
 
         {/* Sub headline */}
-        <div ref={sublineRef} className="mt-7">
+        <div ref={sublineRef} className="mt-9">
           <p
-            className="text-sm md:text-base tracking-[0.4em] uppercase font-accent"
-            style={{ color: "var(--color-blush)", fontWeight: 200 }}
+            className="font-accent uppercase tracking-[0.4em]"
+            style={{
+              fontSize: "var(--t-caption)",
+              color: "var(--color-blush)",
+              fontWeight: 200,
+            }}
           >
             Where desire meets
             <span style={{ color: "var(--color-gold)", marginLeft: 8 }}>
@@ -311,28 +313,23 @@ export default function HeroSection() {
         </div>
 
         {/* CTA */}
-        <div ref={ctaRef} className="mt-10">
+        <div ref={ctaRef} className="mt-14">
           <button
-            className="text-xs tracking-[0.35em] uppercase font-accent px-10 py-4 relative"
-            style={{
-              border: "1px solid rgba(201,168,152,0.4)",
-              color: "var(--color-champagne)",
-              fontWeight: 300,
-            }}
+            className="vk-btn vk-btn-md vk-btn-outline"
             onMouseEnter={(e) => {
               gsap.to(e.currentTarget, {
                 borderColor: "var(--color-gold)",
                 color: "var(--color-black)",
                 backgroundColor: "var(--color-gold)",
-                duration: 0.35,
+                duration: 0.38,
               });
             }}
             onMouseLeave={(e) => {
               gsap.to(e.currentTarget, {
-                borderColor: "rgba(201,168,152,0.4)",
+                borderColor: "rgba(201,168,152,0.38)",
                 color: "var(--color-champagne)",
                 backgroundColor: "transparent",
-                duration: 0.35,
+                duration: 0.38,
               });
             }}
           >
