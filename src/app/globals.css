@@ -265,3 +265,32 @@ section { position: relative; }
   scrollbar-width: none;
 }
 .scrollbar-hide::-webkit-scrollbar { display: none; }
+
+/* ═══════════════════════════════════════════════════════
+   MOBILE OVERRIDES  ≤ 767px
+   Designed as a distinct product — not a scaled desktop
+═══════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+
+  /* Tighter spacing on small viewports */
+  :root {
+    --section-top:    clamp(3.5rem, 7vh, 5rem);
+    --section-bottom: clamp(2.5rem, 4vh, 3.5rem);
+    --container-pad:  clamp(1.25rem, 5vw, 1.75rem);
+  }
+
+  /* Strip strip margin tighter */
+  .vk-strip { margin-bottom: var(--sp-4); }
+
+  /* Buttons: narrower side padding on small screens */
+  .vk-btn-lg  { padding: 1.375rem 3rem;   font-size: 0.65rem; letter-spacing: 0.42em; }
+  .vk-btn-md  { padding: 1.25rem  2.75rem; font-size: 0.65rem; }
+  .vk-btn-sm  { padding: 1rem     2rem;    font-size: 0.62rem; }
+
+  /* Full-width buttons in mobile flex column groups */
+  .vk-mobile-full { width: 100% !important; justify-content: center !important; }
+
+  /* About section: desktop sticky grid → hidden on mobile (see dual layout in JSX) */
+  .about-desktop { display: none !important; }
+  .about-mobile  { display: block !important; }
+}

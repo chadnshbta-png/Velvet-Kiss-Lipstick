@@ -94,133 +94,67 @@ export default function HeroSection() {
     gsap.set(ctaRef.current, { y: 50 });
     gsap.set(scrollHintRef.current, { y: 10 });
 
-    /* ── ScrollTrigger: scrub frames ── */
-    const heroScrollDist = window.innerHeight * 5;
-
-    const frameST = ScrollTrigger.create({
-      trigger: sectionRef.current,
-      start: "top top",
-      end: `+=${heroScrollDist}`,
-      pin: true,
-      scrub: 0.5,
-      anticipatePin: 1,
-      onUpdate: (self) => {
-        const frameIndex = Math.min(
-          TOTAL_FRAMES - 1,
-          Math.floor(self.progress * TOTAL_FRAMES)
-        );
-        if (frameIndex !== frameRef.current.current) {
-          frameRef.current.current = frameIndex;
-          drawFrame(frameIndex);
-        }
-      },
-    });
-
-    /* ── Cinematic text emergence — scroll-driven z-space reveal ── */
-    // Starts at 78% of hero scroll, fully revealed at 97%
-    // Maps to frame range: ~187–233 (near First-0226)
+    /* ── Shared text reveal timeline (reused in both breakpoints) ── */
     const textTl = gsap.timeline({ paused: true });
-
     textTl
-      .to(taglineRef.current, {
-        opacity: 1,
-        z: 0,
-        scale: 1,
-        filter: "blur(0px)",
-        ease: "none",
-        duration: 0.35,
-      })
-      .to(
-        headlineRef.current,
-        {
-          opacity: 1,
-          z: 0,
-          scale: 1,
-          filter: "blur(0px)",
-          ease: "none",
-          duration: 0.45,
-        },
-        0.08
-      )
-      .to(
-        sublineRef.current,
-        {
-          opacity: 1,
-          z: 0,
-          scale: 1,
-          filter: "blur(0px)",
-          ease: "none",
-          duration: 0.35,
-        },
-        0.18
-      )
-      .to(
-        ctaRef.current,
-        {
-          opacity: 1,
-          y: 0,
-          ease: "none",
-          duration: 0.25,
-        },
-        0.32
-      )
-      .to(
-        scrollHintRef.current,
-        {
-          opacity: 1,
-          y: 0,
-          ease: "none",
-          duration: 0.2,
-        },
-        0.45
-      )
-      .to(
-        bottomBarRef.current,
-        {
-          opacity: 1,
-          ease: "none",
-          duration: 0.15,
-        },
-        0.5
-      );
+      .to(taglineRef.current,   { opacity: 1, z: 0, scale: 1, filter: "blur(0px)", ease: "none", duration: 0.35 })
+      .to(headlineRef.current,  { opacity: 1, z: 0, scale: 1, filter: "blur(0px)", ease: "none", duration: 0.45 }, 0.08)
+      .to(sublineRef.current,   { opacity: 1, z: 0, scale: 1, filter: "blur(0px)", ease: "none", duration: 0.35 }, 0.18)
+      .to(ctaRef.current,       { opacity: 1, y: 0, ease: "none", duration: 0.25 }, 0.32)
+      .to(scrollHintRef.current,{ opacity: 1, y: 0, ease: "none", duration: 0.2  }, 0.45)
+      .to(bottomBarRef.current, { opacity: 1, ease: "none", duration: 0.15 }, 0.5);
 
-    // Scroll window: 78%–97% of total hero scroll distance
-    const textST = ScrollTrigger.create({
-      trigger: sectionRef.current,
-      start: `top+=${heroScrollDist * 0.78} top`,
-      end: `top+=${heroScrollDist * 0.97} top`,
-      scrub: 1.8,
-      onUpdate: (self) => {
-        textTl.progress(self.progress);
-      },
-    });
+    /* ── Scroll hint bounce (always) ── */
+    gsap.to(scrollHintRef.current, { y: 8, repeat: -1, yoyo: true, duration: 1.5, ease: "sine.inOut" });
 
-    /* ── Subtle overlay darkens as text appears ── */
-    const overlayST = ScrollTrigger.create({
-      trigger: sectionRef.current,
-      start: `top+=${heroScrollDist * 0.75} top`,
-      end: `top+=${heroScrollDist * 0.98} top`,
-      scrub: true,
-      onUpdate: (self) => {
-        if (overlayRef.current) {
-          gsap.set(overlayRef.current, { opacity: self.progress * 0.35 });
-        }
-      },
-    });
+    /* ── matchMedia: different scroll distances for mobile vs desktop ──
+         Mobile  : 2.5×vh — less scrolling, text reveals at ~70 %
+         Desktop : 5.0×vh — full cinematic distance, text at ~78 %     */
+    const mm = gsap.matchMedia();
 
-    /* ── Scroll hint bounce ── */
-    gsap.to(scrollHintRef.current, {
-      y: 8,
-      repeat: -1,
-      yoyo: true,
-      duration: 1.5,
-      ease: "sine.inOut",
-    });
+    const buildTriggers = (dist: number, textStart: number, textEnd: number) => {
+      const frameST = ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top top",
+        end: `+=${dist}`,
+        pin: true,
+        scrub: 0.5,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const fi = Math.min(TOTAL_FRAMES - 1, Math.floor(self.progress * TOTAL_FRAMES));
+          if (fi !== frameRef.current.current) {
+            frameRef.current.current = fi;
+            drawFrame(fi);
+          }
+        },
+      });
+
+      const textST = ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: `top+=${dist * textStart} top`,
+        end:   `top+=${dist * textEnd}   top`,
+        scrub: 1.8,
+        onUpdate: (self) => { textTl.progress(self.progress); },
+      });
+
+      const overlayST = ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: `top+=${dist * (textStart - 0.03)} top`,
+        end:   `top+=${dist * 0.98} top`,
+        scrub: true,
+        onUpdate: (self) => {
+          if (overlayRef.current) gsap.set(overlayRef.current, { opacity: self.progress * 0.35 });
+        },
+      });
+
+      return () => { frameST.kill(); textST.kill(); overlayST.kill(); };
+    };
+
+    mm.add("(max-width: 767px)",  () => buildTriggers(window.innerHeight * 2.5, 0.70, 0.93));
+    mm.add("(min-width: 768px)",  () => buildTriggers(window.innerHeight * 5.0, 0.78, 0.97));
 
     return () => {
-      frameST.kill();
-      textST.kill();
-      overlayST.kill();
+      mm.revert();
       window.removeEventListener("resize", setSize);
     };
   }, []);

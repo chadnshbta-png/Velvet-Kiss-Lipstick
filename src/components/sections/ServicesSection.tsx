@@ -81,81 +81,57 @@ export default function ServicesSection() {
       const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[];
       const total = cards.length;
 
-      // All cards start hidden except first
       gsap.set(cards, { opacity: 0, y: 90, scale: 0.88, filter: "blur(8px)" });
 
-      // Scroll distance: 1.8 * vh per card = generous breathing room
-      const perCard = window.innerHeight * 1.8;
-      const totalDist = perCard * (total + 0.5);
+      /* Build timeline helper — called once per matchMedia breakpoint */
+      const buildCardTimeline = (perCard: number) => {
+        const totalDist = perCard * (total + 0.5);
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: stageRef.current,
+            start: "top top",
+            end: `+=${totalDist}`,
+            pin: true,
+            scrub: 1.2,
+            anticipatePin: 1,
+          },
+        });
+
+        cards.forEach((card, i) => {
+          const offset    = i * (1 / total);
+          const exitStart = offset + (0.65 / total) * total;
+
+          tl.fromTo(card,
+            { opacity: 0, y: 90, scale: 0.88, filter: "blur(10px)" },
+            { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.18, ease: "power3.out" },
+            offset
+          );
+          if (i < total - 1) {
+            tl.to(card, { opacity: 0, y: -70, scale: 0.94, filter: "blur(6px)", duration: 0.16, ease: "power2.in" }, exitStart);
+          }
+        });
+
+        ScrollTrigger.create({
           trigger: stageRef.current,
           start: "top top",
           end: `+=${totalDist}`,
-          pin: true,
-          scrub: 1.2,
-          anticipatePin: 1,
-        },
-      });
-
-      cards.forEach((card, i) => {
-        const offset = i * (1 / total);
-        const exitStart = offset + 0.65 / total * total;
-
-        // Enter: rise from below, unblur
-        tl.fromTo(
-          card,
-          { opacity: 0, y: 90, scale: 0.88, filter: "blur(10px)" },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            filter: "blur(0px)",
-            duration: 0.18,
-            ease: "power3.out",
+          scrub: true,
+          onUpdate: (self) => {
+            const idx = Math.min(total - 1, Math.floor(self.progress * total));
+            if (counterRef.current)
+              counterRef.current.textContent = `${String(idx + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
+            if (progressBarRef.current)
+              gsap.set(progressBarRef.current, { scaleX: (idx + 1) / total, transformOrigin: "left" });
           },
-          offset
-        );
+        });
+      };
 
-        // Hold (implicit — card stays while progress moves through hold zone)
+      /* matchMedia: mobile 1.2×vh/card, desktop 1.8×vh/card */
+      const mm = gsap.matchMedia();
+      mm.add("(max-width: 767px)",  () => { buildCardTimeline(window.innerHeight * 1.2); return () => {}; });
+      mm.add("(min-width: 768px)",  () => { buildCardTimeline(window.innerHeight * 1.8); return () => {}; });
 
-        // Exit: drift up and fade (except last card)
-        if (i < total - 1) {
-          tl.to(
-            card,
-            {
-              opacity: 0,
-              y: -70,
-              scale: 0.94,
-              filter: "blur(6px)",
-              duration: 0.16,
-              ease: "power2.in",
-            },
-            exitStart
-          );
-        }
-      });
-
-      /* ── Counter + progress bar sync ── */
-      ScrollTrigger.create({
-        trigger: stageRef.current,
-        start: "top top",
-        end: `+=${totalDist}`,
-        scrub: true,
-        onUpdate: (self) => {
-          const idx = Math.min(total - 1, Math.floor(self.progress * total));
-          if (counterRef.current) {
-            counterRef.current.textContent = `${String(idx + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
-          }
-          if (progressBarRef.current) {
-            gsap.set(progressBarRef.current, {
-              scaleX: (idx + 1) / total,
-              transformOrigin: "left",
-            });
-          }
-        },
-      });
     }, section);
 
     return () => ctx.revert();
@@ -222,7 +198,7 @@ export default function ServicesSection() {
             }}
             className="absolute gpu"
             style={{
-              width: "clamp(300px, 38vw, 540px)",
+              width: "clamp(280px, 86vw, 540px)",
               opacity: 0,
             }}
           >

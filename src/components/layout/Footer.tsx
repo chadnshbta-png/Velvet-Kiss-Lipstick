@@ -158,8 +158,8 @@ export default function Footer() {
           ref={navRef}
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "clamp(2rem, 5vw, 5rem)",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 14rem), 1fr))",
+            gap: "clamp(2.5rem, 5vw, 5rem)",
             marginBottom: "clamp(5rem, 8vh, 7rem)",
           }}
         >
@@ -259,8 +259,8 @@ export default function Footer() {
               alignItems: "center",
               justifyContent: "space-between",
               flexWrap: "wrap",
-              gap: "var(--sp-3)",
-              paddingTop: "var(--sp-2)",
+              gap: "var(--sp-4)",
+              paddingTop: "var(--sp-3)",
             }}
           >
             <p

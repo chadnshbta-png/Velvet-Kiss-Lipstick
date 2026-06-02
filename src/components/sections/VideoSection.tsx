@@ -19,11 +19,16 @@ export default function VideoSection() {
     if (!section) return;
 
     const ctx = gsap.context(() => {
+      /* matchMedia: mobile 2×vh, desktop 4×vh */
+      let pinDist = window.innerHeight * 4;
+      const mm = gsap.matchMedia();
+      mm.add("(max-width: 767px)", () => { pinDist = window.innerHeight * 2; return () => {}; });
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: wrapRef.current,
           start: "top top",
-          end: `+=${window.innerHeight * 4}`,
+          end: `+=${pinDist}`,
           pin: true,
           scrub: 1,
           anticipatePin: 1,
@@ -215,7 +220,7 @@ export default function VideoSection() {
           className="absolute gpu overflow-hidden"
           style={{
             width: "min(88vw, 1440px)",
-            height: "min(49.5vw, 810px)",
+            height: "min(56.25vw, 810px)",   /* 16:9 on mobile, capped at 810px on wide screens */
             borderRadius: "6px",
             border: "1px solid rgba(201,168,152,0.15)",
             opacity: 0,

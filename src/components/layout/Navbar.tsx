@@ -267,15 +267,18 @@ export default function Navbar() {
               Shop Now
             </button>
 
-            {/* Mobile trigger — two elegant lines → X */}
+            {/* Mobile trigger — 44×44px tap area wrapping the two elegant lines */}
             <button
               className="flex md:hidden"
               onClick={toggleMenu}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               style={{
-                position: "relative",
-                width: "1.5rem",
-                height: "0.75rem",
+                /* 44×44 minimum touch target (WCAG 2.5.5) */
+                width: "2.75rem",
+                height: "2.75rem",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
                 background: "none",
                 border: "none",
                 cursor: "none",
@@ -283,24 +286,27 @@ export default function Navbar() {
                 padding: 0,
               }}
             >
-              <span
-                ref={line1Ref}
-                style={{
-                  position: "absolute",
-                  top: 0, left: 0,
-                  width: "100%", height: "1px",
-                  backgroundColor: "var(--color-gold)",
-                }}
-              />
-              <span
-                ref={line2Ref}
-                style={{
-                  position: "absolute",
-                  bottom: 0, left: "25%",
-                  width: "75%", height: "1px",
-                  backgroundColor: "var(--color-gold)",
-                }}
-              />
+              {/* Lines container — 24×12px, centred inside the tap area */}
+              <div style={{ position: "relative", width: "1.5rem", height: "0.75rem", flexShrink: 0 }}>
+                <span
+                  ref={line1Ref}
+                  style={{
+                    position: "absolute",
+                    top: 0, left: 0,
+                    width: "100%", height: "1px",
+                    backgroundColor: "var(--color-gold)",
+                  }}
+                />
+                <span
+                  ref={line2Ref}
+                  style={{
+                    position: "absolute",
+                    bottom: 0, left: "25%",
+                    width: "75%", height: "1px",
+                    backgroundColor: "var(--color-gold)",
+                  }}
+                />
+              </div>
             </button>
 
           </div>

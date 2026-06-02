@@ -250,7 +250,7 @@ export default function TestimonialsSection() {
               }}
               className="flex-shrink-0 gpu"
               style={{
-                width: "clamp(300px, 30vw, 400px)",
+                width: "clamp(280px, 82vw, 400px)",
                 opacity: 0,
                 marginTop: i % 2 === 0 ? 0 : "clamp(2.5rem, 5vw, 4rem)",
               }}

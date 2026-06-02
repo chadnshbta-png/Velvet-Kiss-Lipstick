@@ -90,82 +90,51 @@ export default function ProductsSection() {
         });
       });
 
-      // Each card gets 2.2 * vh of scroll — generous and readable
-      const perCard = window.innerHeight * 2.2;
-      const totalDist = perCard * (total + 0.6);
+      /* Build timeline — parameterised by scroll distance per card */
+      const buildProductTimeline = (perCard: number) => {
+        const totalDist = perCard * (total + 0.6);
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: stageRef.current,
-          start: "top top",
-          end: `+=${totalDist}`,
-          pin: true,
-          scrub: 0.8,
-          anticipatePin: 1,
-        },
-      });
-
-      cards.forEach((card, i) => {
-        if (i === 0) return;
-
-        // New card sweeps in from right with subtle rotation
-        tl.fromTo(
-          card,
-          {
-            x: 500,
-            rotateY: 18,
-            scale: 0.88,
-            opacity: 0,
-            zIndex: total + i,
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: stageRef.current,
+            start: "top top",
+            end: `+=${totalDist}`,
+            pin: true,
+            scrub: 0.8,
+            anticipatePin: 1,
           },
-          {
-            x: 0,
-            rotateY: 0,
-            scale: 1,
-            opacity: 1,
-            zIndex: total + i,
-            duration: 0.55,
-            ease: "power4.out",
-          }
-        );
+        });
 
-        // Previous card eases off to the left — subtle, elegant
-        tl.to(
-          cards[i - 1],
-          {
-            x: -80,
-            scale: 0.92,
-            opacity: 0,
-            rotateY: -5,
-            filter: "blur(4px)",
-            duration: 0.45,
-            ease: "power3.inOut",
-          },
-          "<0.08"
-        );
+        cards.forEach((card, i) => {
+          if (i === 0) return;
 
-        // Update nav dots
-        tl.call(
-          () => {
+          tl.fromTo(card,
+            { x: 500, rotateY: 18, scale: 0.88, opacity: 0, zIndex: total + i },
+            { x: 0, rotateY: 0, scale: 1, opacity: 1, zIndex: total + i, duration: 0.55, ease: "power4.out" }
+          );
+          tl.to(cards[i - 1],
+            { x: -80, scale: 0.92, opacity: 0, rotateY: -5, filter: "blur(4px)", duration: 0.45, ease: "power3.inOut" },
+            "<0.08"
+          );
+          tl.call(() => {
             dotRefs.current.forEach((dot, j) => {
               if (!dot) return;
               gsap.to(dot, {
-                backgroundColor:
-                  j === i
-                    ? "var(--color-gold)"
-                    : "rgba(201,168,152,0.18)",
+                backgroundColor: j === i ? "var(--color-gold)" : "rgba(201,168,152,0.18)",
                 width: j === i ? "1.5rem" : "0.375rem",
                 duration: 0.4,
               });
             });
-            if (labelRef.current) {
-              labelRef.current.textContent = PRODUCTS[i].name;
-            }
-          },
-          [],
-          "<0.1"
-        );
-      });
+            if (labelRef.current) labelRef.current.textContent = PRODUCTS[i].name;
+          }, [], "<0.1");
+        });
+      }; // end buildProductTimeline
+
+      /* matchMedia: mobile 1.4×vh/card, desktop 2.2×vh/card */
+      const mm = gsap.matchMedia();
+      mm.add("(max-width: 767px)", () => { buildProductTimeline(window.innerHeight * 1.4); return () => {}; });
+      mm.add("(min-width: 768px)", () => { buildProductTimeline(window.innerHeight * 2.2); return () => {}; });
+
     }, section);
 
     return () => ctx.revert();
@@ -228,8 +197,8 @@ export default function ProductsSection() {
         <div
           className="relative gpu"
           style={{
-            width: "clamp(300px, 36vw, 480px)",
-            height: "clamp(440px, 60vh, 660px)",
+            width: "clamp(280px, 86vw, 480px)",
+            height: "clamp(400px, 60vh, 660px)",
             transformStyle: "preserve-3d",
           }}
         >
