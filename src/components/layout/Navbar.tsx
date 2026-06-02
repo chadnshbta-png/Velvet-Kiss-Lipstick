@@ -1,178 +1,424 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsap } from "@/lib/gsap-config";
+import { ScrollTrigger } from "@/lib/gsap-config";
 
 const NAV_LINKS = [
-  { label: "Story", href: "#about" },
-  { label: "Rituals", href: "#services" },
-  { label: "Collection", href: "#products" },
-  { label: "Film", href: "#video" },
-  { label: "Voices", href: "#testimonials" },
+  { label: "Story",       href: "#about" },
+  { label: "Rituals",     href: "#services" },
+  { label: "Collection",  href: "#products" },
+  { label: "Film",        href: "#video" },
+  { label: "Voices",      href: "#testimonials" },
 ];
 
 export default function Navbar() {
-  const navRef = useRef<HTMLElement>(null);
-  const logoRef = useRef<HTMLDivElement>(null);
-  const linksRef = useRef<HTMLUListElement>(null);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const navRef       = useRef<HTMLElement>(null);
+  const navBgRef     = useRef<HTMLDivElement>(null);
+  const linkRefs     = useRef<(HTMLAnchorElement | null)[]>([]);
+  const menuRef      = useRef<HTMLDivElement>(null);
+  const menuItemRefs = useRef<(HTMLLIElement | null)[]>([]);
+  const menuBotRef   = useRef<HTMLDivElement>(null);
+  const line1Ref     = useRef<HTMLSpanElement>(null);
+  const line2Ref     = useRef<HTMLSpanElement>(null);
 
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  /* ─────────────────────────────────────────
+     Boot animations + scroll backdrop
+  ───────────────────────────────────────── */
   useEffect(() => {
     const nav = navRef.current;
     if (!nav) return;
 
+    /* Entrance */
     gsap.fromTo(
       nav,
-      { y: -80, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.2, ease: "power4.out", delay: 0.5 }
+      { y: -90, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1.7, ease: "power4.out", delay: 0.5 }
     );
 
-    ScrollTrigger.create({
-      start: "top -100",
-      onEnter: () => {
-        gsap.to(nav, {
-          backgroundColor: "rgba(10, 6, 8, 0.92)",
-          backdropFilter: "blur(12px)",
-          borderBottomColor: "rgba(201, 168, 152, 0.15)",
-          duration: 0.4,
-        });
-      },
-      onLeaveBack: () => {
-        gsap.to(nav, {
-          backgroundColor: "transparent",
-          backdropFilter: "blur(0px)",
-          borderBottomColor: "transparent",
-          duration: 0.4,
-        });
-      },
+    /* Scroll: fade-in glass backdrop */
+    const bgST = ScrollTrigger.create({
+      start: "top -70",
+      onEnter: () =>
+        gsap.to(navBgRef.current, { opacity: 1, duration: 0.65, ease: "power2.out" }),
+      onLeaveBack: () =>
+        gsap.to(navBgRef.current, { opacity: 0, duration: 0.65, ease: "power2.out" }),
     });
+
+    /* Nav link hover — growing centre underline */
+    const cleanups: (() => void)[] = [];
+    linkRefs.current
+      .filter((el): el is HTMLAnchorElement => el !== null)
+      .forEach((link) => {
+        const ul = link.querySelector<HTMLElement>(".nav-ul");
+
+        const onEnter = () => {
+          gsap.to(link, { color: "var(--color-ivory)", duration: 0.28 });
+          if (ul) gsap.to(ul, { scaleX: 1, duration: 0.42, ease: "power3.out" });
+        };
+        const onLeave = () => {
+          gsap.to(link, { color: "rgba(250,246,240,0.46)", duration: 0.28 });
+          if (ul) gsap.to(ul, { scaleX: 0, duration: 0.32, ease: "power2.in" });
+        };
+
+        link.addEventListener("mouseenter", onEnter);
+        link.addEventListener("mouseleave", onLeave);
+        cleanups.push(() => {
+          link.removeEventListener("mouseenter", onEnter);
+          link.removeEventListener("mouseleave", onLeave);
+        });
+      });
+
+    return () => {
+      bgST.kill();
+      cleanups.forEach((fn) => fn());
+    };
   }, []);
 
-  const toggleMenu = () => {
-    const menu = menuRef.current;
-    if (!menu) return;
+  /* ─────────────────────────────────────────
+     Mobile menu
+  ───────────────────────────────────────── */
+  const openMenu = () => {
+    setMenuOpen(true);
+    const items = menuItemRefs.current.filter((el): el is HTMLLIElement => el !== null);
 
-    if (!menuOpen) {
-      setMenuOpen(true);
-      gsap.fromTo(
-        menu,
-        { clipPath: "inset(0 0 100% 0)", opacity: 0 },
-        { clipPath: "inset(0 0 0% 0)", opacity: 1, duration: 0.6, ease: "power4.out" }
-      );
-      gsap.fromTo(
-        menu.querySelectorAll("li"),
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, stagger: 0.07, duration: 0.5, ease: "power3.out", delay: 0.1 }
-      );
-    } else {
-      gsap.to(menu, {
-        clipPath: "inset(0 0 100% 0)",
-        opacity: 0,
-        duration: 0.5,
-        ease: "power4.in",
-        onComplete: () => setMenuOpen(false),
-      });
-    }
+    gsap.set(menuRef.current, { pointerEvents: "all" });
+    gsap.to(menuRef.current, { opacity: 1, duration: 0.55, ease: "power2.out" });
+    gsap.set(items, { y: 70, opacity: 0 });
+    gsap.to(items, {
+      y: 0, opacity: 1,
+      stagger: 0.08, duration: 0.95, ease: "power4.out", delay: 0.12,
+    });
+    gsap.set(menuBotRef.current, { y: 28, opacity: 0 });
+    gsap.to(menuBotRef.current, {
+      y: 0, opacity: 1, duration: 0.7, ease: "power3.out", delay: 0.52,
+    });
+
+    /* Lines → X */
+    gsap.to(line1Ref.current, { y: 6, rotate: 45,  duration: 0.42, ease: "power3.inOut" });
+    gsap.to(line2Ref.current, { y: -5, rotate: -45, left: 0, width: "100%", duration: 0.42, ease: "power3.inOut" });
   };
 
+  const closeMenu = () => {
+    const items = menuItemRefs.current.filter((el): el is HTMLLIElement => el !== null);
+    const all   = [...items, menuBotRef.current].filter(Boolean);
+
+    gsap.to(all, { y: -36, opacity: 0, stagger: 0.04, duration: 0.32, ease: "power2.in" });
+    gsap.to(menuRef.current, {
+      opacity: 0, duration: 0.42, ease: "power2.in", delay: 0.18,
+      onComplete: () => {
+        setMenuOpen(false);
+        gsap.set(menuRef.current, { pointerEvents: "none" });
+      },
+    });
+
+    /* X → Lines */
+    gsap.to(line1Ref.current, { y: 0, rotate: 0, duration: 0.42, ease: "power3.inOut" });
+    gsap.to(line2Ref.current, { y: 0, rotate: 0, left: "25%", width: "75%", duration: 0.42, ease: "power3.inOut" });
+  };
+
+  const toggleMenu = () => (menuOpen ? closeMenu() : openMenu());
+
+  /* ─────────────────────────────────────────
+     Render
+  ───────────────────────────────────────── */
   return (
     <>
+      {/* ══════════════════════ NAVBAR ══════════════════════ */}
       <nav
         ref={navRef}
-        className="fixed top-0 left-0 right-0 z-50 px-8 md:px-16 py-5 flex items-center justify-between border-b border-transparent"
-        style={{ opacity: 0 }}
-      >
-        <div ref={logoRef} className="flex items-center gap-3">
-          <span
-            className="text-2xl tracking-[0.3em] uppercase font-display"
-            style={{ color: "var(--color-gold)", letterSpacing: "0.35em" }}
-          >
-            Velvet Kiss
-          </span>
-        </div>
-
-        <ul
-          ref={linksRef}
-          className="hidden md:flex items-center gap-10 list-none"
-        >
-          {NAV_LINKS.map((link) => (
-            <li key={link.label}>
-              <a
-                href={link.href}
-                className="text-xs tracking-[0.25em] uppercase font-accent transition-colors duration-300"
-                style={{ color: "var(--color-champagne)", fontWeight: 300 }}
-                onMouseEnter={(e) =>
-                  gsap.to(e.currentTarget, { color: "var(--color-gold)", duration: 0.3 })
-                }
-                onMouseLeave={(e) =>
-                  gsap.to(e.currentTarget, { color: "var(--color-champagne)", duration: 0.3 })
-                }
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <button
-          className="hidden md:flex vk-btn vk-btn-sm vk-btn-ghost"
-          onMouseEnter={(e) => {
-            gsap.to(e.currentTarget, {
-              backgroundColor: "var(--color-gold)",
-              color: "var(--color-black)",
-              borderColor: "var(--color-gold)",
-              duration: 0.35,
-            });
-          }}
-          onMouseLeave={(e) => {
-            gsap.to(e.currentTarget, {
-              backgroundColor: "transparent",
-              color: "var(--color-gold)",
-              borderColor: "rgba(201,168,152,0.45)",
-              duration: 0.35,
-            });
-          }}
-        >
-          Shop Now
-        </button>
-
-        <button
-          className="md:hidden flex flex-col gap-1.5 p-2"
-          onClick={toggleMenu}
-          aria-label="Toggle menu"
-        >
-          <span className="block w-6 h-px bg-current" style={{ color: "var(--color-gold)" }} />
-          <span className="block w-4 h-px bg-current ml-auto" style={{ color: "var(--color-gold)" }} />
-        </button>
-      </nav>
-
-      {/* Mobile menu */}
-      <div
-        ref={menuRef}
-        className="fixed inset-0 z-40 flex flex-col items-center justify-center"
         style={{
-          backgroundColor: "var(--color-black)",
-          clipPath: "inset(0 0 100% 0)",
-          opacity: 0,
-          display: menuOpen ? "flex" : "none",
+          position: "fixed", top: 0, left: 0, right: 0,
+          zIndex: 100, opacity: 0,
         }}
       >
-        <ul className="list-none flex flex-col items-center gap-8">
-          {NAV_LINKS.map((link) => (
-            <li key={link.label}>
+        {/* Glass backdrop — animated in on scroll */}
+        <div
+          ref={navBgRef}
+          style={{
+            position: "absolute", inset: 0, opacity: 0,
+            backgroundColor: "rgba(7, 4, 7, 0.82)",
+            backdropFilter: "blur(22px) saturate(160%)",
+            WebkitBackdropFilter: "blur(22px) saturate(160%)",
+            borderBottom: "1px solid rgba(201, 168, 152, 0.09)",
+            pointerEvents: "none",
+          }}
+        />
+
+        {/* Content row */}
+        <div
+          style={{
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            paddingLeft: "var(--container-pad)",
+            paddingRight: "var(--container-pad)",
+            height: "5rem",
+          }}
+        >
+
+          {/* ── Logo ── */}
+          <a
+            href="#hero"
+            style={{ textDecoration: "none", flexShrink: 0, lineHeight: 1 }}
+            onMouseEnter={(e) => gsap.to(e.currentTarget, { opacity: 0.68, duration: 0.3 })}
+            onMouseLeave={(e) => gsap.to(e.currentTarget, { opacity: 1, duration: 0.3 })}
+          >
+            <span
+              className="font-display italic"
+              style={{
+                fontSize: "clamp(1.25rem, 1.7vw, 1.55rem)",
+                color: "var(--color-ivory)",
+                letterSpacing: "0.01em",
+                lineHeight: 1,
+              }}
+            >
+              Velvet
+              <span style={{ color: "var(--color-gold)" }}> Kiss</span>
+            </span>
+          </a>
+
+          {/* ── Desktop nav — truly centred via absolute ── */}
+          <ul
+            className="hidden md:flex"
+            style={{
+              position: "absolute",
+              left: "50%",
+              top: "50%",
+              transform: "translate(-50%, -50%)",
+              alignItems: "center",
+              gap: "clamp(2rem, 3.5vw, 3.5rem)",
+              listStyle: "none",
+              margin: 0,
+              padding: 0,
+            }}
+          >
+            {NAV_LINKS.map((link, i) => (
+              <li key={link.label}>
+                <a
+                  ref={(el) => { linkRefs.current[i] = el; }}
+                  href={link.href}
+                  style={{
+                    position: "relative",
+                    fontFamily: "var(--font-accent)",
+                    fontSize: "var(--t-label)",
+                    fontWeight: 300,
+                    letterSpacing: "0.32em",
+                    textTransform: "uppercase",
+                    color: "rgba(250,246,240,0.46)",
+                    textDecoration: "none",
+                    display: "block",
+                    paddingBottom: "4px",
+                  }}
+                >
+                  {link.label}
+
+                  {/* Hover underline — GSAP controlled */}
+                  <span
+                    className="nav-ul"
+                    style={{
+                      position: "absolute",
+                      bottom: 0, left: 0, right: 0,
+                      height: "1px",
+                      backgroundColor: "var(--color-gold)",
+                      transform: "scaleX(0)",
+                      transformOrigin: "center",
+                      display: "block",
+                    }}
+                  />
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          {/* ── Right group ── */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "var(--sp-4)",
+              flexShrink: 0,
+            }}
+          >
+
+            {/* Desktop CTA */}
+            <button
+              className="hidden md:flex vk-btn vk-btn-sm vk-btn-ghost"
+              onMouseEnter={(e) =>
+                gsap.to(e.currentTarget, {
+                  backgroundColor: "var(--color-gold)",
+                  color: "var(--color-black)",
+                  borderColor: "var(--color-gold)",
+                  duration: 0.35,
+                })
+              }
+              onMouseLeave={(e) =>
+                gsap.to(e.currentTarget, {
+                  backgroundColor: "transparent",
+                  color: "var(--color-gold)",
+                  borderColor: "rgba(201,168,152,0.45)",
+                  duration: 0.35,
+                })
+              }
+            >
+              Shop Now
+            </button>
+
+            {/* Mobile trigger — two elegant lines → X */}
+            <button
+              className="flex md:hidden"
+              onClick={toggleMenu}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              style={{
+                position: "relative",
+                width: "1.5rem",
+                height: "0.75rem",
+                background: "none",
+                border: "none",
+                cursor: "none",
+                flexShrink: 0,
+                padding: 0,
+              }}
+            >
+              <span
+                ref={line1Ref}
+                style={{
+                  position: "absolute",
+                  top: 0, left: 0,
+                  width: "100%", height: "1px",
+                  backgroundColor: "var(--color-gold)",
+                }}
+              />
+              <span
+                ref={line2Ref}
+                style={{
+                  position: "absolute",
+                  bottom: 0, left: "25%",
+                  width: "75%", height: "1px",
+                  backgroundColor: "var(--color-gold)",
+                }}
+              />
+            </button>
+
+          </div>
+        </div>
+      </nav>
+
+      {/* ══════════════════ FULLSCREEN MOBILE MENU ══════════════════ */}
+      <div
+        ref={menuRef}
+        style={{
+          position: "fixed", inset: 0,
+          zIndex: 99,
+          opacity: 0,
+          pointerEvents: "none",
+          backgroundColor: "var(--color-black)",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          paddingLeft: "var(--container-pad)",
+          paddingRight: "var(--container-pad)",
+          paddingTop: "6rem",
+          paddingBottom: "3rem",
+          overflow: "hidden",
+        }}
+      >
+        {/* Background accent */}
+        <div
+          style={{
+            position: "absolute", inset: 0, pointerEvents: "none",
+            background:
+              "radial-gradient(ellipse 80% 60% at 92% 8%, rgba(80,14,30,0.10) 0%, transparent 65%)",
+          }}
+        />
+
+        {/* Large editorial navigation links */}
+        <ul
+          style={{
+            listStyle: "none",
+            margin: 0,
+            padding: 0,
+            position: "relative",
+          }}
+        >
+          {NAV_LINKS.map((link, i) => (
+            <li
+              key={link.label}
+              ref={(el) => { menuItemRefs.current[i] = el; }}
+              style={{ marginBottom: "clamp(0.25rem, 1.5vh, 0.75rem)" }}
+            >
               <a
                 href={link.href}
-                className="text-4xl font-display italic"
-                style={{ color: "var(--color-champagne)" }}
-                onClick={toggleMenu}
+                onClick={closeMenu}
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontStyle: "italic",
+                  fontSize: "clamp(3rem, 12vw, 6rem)",
+                  color: "var(--color-ivory)",
+                  textDecoration: "none",
+                  display: "block",
+                  lineHeight: 1.08,
+                  letterSpacing: "-0.01em",
+                }}
+                onMouseEnter={(e) =>
+                  gsap.to(e.currentTarget, {
+                    color: "var(--color-gold)",
+                    x: 16,
+                    duration: 0.38,
+                    ease: "power2.out",
+                  })
+                }
+                onMouseLeave={(e) =>
+                  gsap.to(e.currentTarget, {
+                    color: "var(--color-ivory)",
+                    x: 0,
+                    duration: 0.38,
+                    ease: "power2.out",
+                  })
+                }
               >
                 {link.label}
               </a>
             </li>
           ))}
         </ul>
+
+        {/* Bottom bar — CTA + brand line */}
+        <div
+          ref={menuBotRef}
+          style={{
+            marginTop: "clamp(2rem, 7vh, 5rem)",
+            paddingTop: "clamp(1.5rem, 4vh, 2.5rem)",
+            borderTop: "1px solid rgba(201,168,152,0.12)",
+            display: "flex",
+            flexDirection: "column",
+            gap: "var(--sp-5)",
+          }}
+        >
+          <button
+            className="vk-btn vk-btn-md vk-btn-outline"
+            style={{ alignSelf: "flex-start" }}
+            onClick={closeMenu}
+          >
+            Shop the Collection
+          </button>
+
+          <p
+            style={{
+              fontFamily: "var(--font-accent)",
+              fontSize: "var(--t-label)",
+              letterSpacing: "0.5em",
+              textTransform: "uppercase",
+              color: "rgba(201,168,152,0.26)",
+              fontWeight: 300,
+            }}
+          >
+            Maison de Beauté · Est. 2024
+          </p>
+        </div>
       </div>
     </>
   );
