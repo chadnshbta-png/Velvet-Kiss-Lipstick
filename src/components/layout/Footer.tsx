@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const FOOTER_LINKS = {
   Collection: ["Crimson Reverie", "Blush Nocturne", "Gold Séduction", "Noir Obsession", "All Shades"],
@@ -112,7 +111,7 @@ export default function Footer() {
       <div
         ref={topLineRef}
         className="h-px w-full"
-        style={{ background: "linear-gradient(to right, var(--color-gold), rgba(201,169,110,0.3), transparent)" }}
+        style={{ background: "linear-gradient(to right, var(--color-gold), rgba(201,168,152,0.3), transparent)" }}
       />
 
       <div className="container mx-auto px-8 md:px-16 max-w-7xl pt-20 pb-10">
@@ -131,7 +130,7 @@ export default function Footer() {
           </h2>
           <p
             className="text-xs tracking-[0.5em] uppercase font-accent mt-3"
-            style={{ color: "rgba(201,169,110,0.5)", fontWeight: 300 }}
+            style={{ color: "rgba(201,168,152,0.5)", fontWeight: 300 }}
           >
             Maison de Beauté · Est. 2024 · Paris
           </p>
@@ -177,7 +176,7 @@ export default function Footer() {
         {/* Newsletter */}
         <div
           className="py-10 border-t border-b mb-16 grid grid-cols-1 md:grid-cols-2 gap-8 items-center"
-          style={{ borderColor: "rgba(201,169,110,0.1)" }}
+          style={{ borderColor: "rgba(201,168,152,0.1)" }}
         >
           <div>
             <h3
@@ -196,7 +195,7 @@ export default function Footer() {
               placeholder="Your email address"
               className="flex-1 px-5 py-4 bg-transparent border text-sm font-body outline-none"
               style={{
-                borderColor: "rgba(201,169,110,0.2)",
+                borderColor: "rgba(201,168,152,0.2)",
                 color: "var(--color-ivory)",
                 fontFamily: "var(--font-body)",
               }}
@@ -222,7 +221,7 @@ export default function Footer() {
             className="font-display italic select-none pointer-events-none"
             style={{
               fontSize: "clamp(4rem, 14vw, 16rem)",
-              color: "rgba(201,169,110,0.04)",
+              color: "rgba(201,168,152,0.04)",
               lineHeight: 0.85,
               letterSpacing: "-0.04em",
               whiteSpace: "nowrap",
@@ -236,7 +235,7 @@ export default function Footer() {
         <div
           ref={bottomRef}
           className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8 border-t opacity-0"
-          style={{ borderColor: "rgba(201,169,110,0.08)" }}
+          style={{ borderColor: "rgba(201,168,152,0.08)" }}
         >
           <p
             className="text-xs font-accent"

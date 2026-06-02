@@ -2,78 +2,64 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap-config";
+import { ScrollTrigger } from "@/lib/gsap-config";
+
+const CONTENT_BLOCKS = [
+  {
+    label: "Introduction",
+    heading: "Born from desire",
+    body: "Born from the intersection of haute couture and sensory art, Velvet Kiss is not merely a lipstick — it is a declaration. Each shade is a mood distilled into pigment, a feeling crystallised into form.",
+    accent: "var(--color-gold)",
+  },
+  {
+    label: "Vision",
+    heading: "Beauty as language",
+    body: "We believe beauty is the most intimate form of self-expression. A single shade can shift your posture, alter your presence, rewrite the story of a room the moment you enter.",
+    accent: "var(--color-blush)",
+  },
+  {
+    label: "Mission",
+    heading: "Rare ingredients",
+    body: "We source only the rarest ingredients — Moroccan rose wax, Damascus oud extract, and 24-karat gold micro-particles — to create a formula that nourishes as it adorns. Every tube is hand-finished in Paris.",
+    accent: "var(--color-mauve)",
+  },
+  {
+    label: "Craftsmanship",
+    heading: "The atelier",
+    body: "Every shade is named after a feeling. Every formula is tested against the harshest of lights. Because luxury is not an object — it is an experience, and we obsess over every detail of yours.",
+    accent: "var(--color-champagne)",
+  },
+];
 
 export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const bgRef = useRef<HTMLDivElement>(null);
-  const layer1Ref = useRef<HTMLDivElement>(null);
-  const layer2Ref = useRef<HTMLDivElement>(null);
-  const numberRef = useRef<HTMLDivElement>(null);
+  const stickyRef = useRef<HTMLDivElement>(null);
+  const blockRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoWrapRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
-  const text1Ref = useRef<HTMLParagraphElement>(null);
-  const text2Ref = useRef<HTMLParagraphElement>(null);
-  const text3Ref = useRef<HTMLParagraphElement>(null);
+  const numberRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
-  const sideTextRef = useRef<HTMLDivElement>(null);
-  const imageFrameRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
     const ctx = gsap.context(() => {
-      /* ── Background parallax ── */
-      gsap.to(bgRef.current, {
-        y: "-20%",
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-        },
-      });
-
-      gsap.to(layer1Ref.current, {
-        y: "-8%",
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.5,
-        },
-      });
-
-      gsap.to(layer2Ref.current, {
-        y: "5%",
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 2,
-        },
-      });
-
-      /* ── Section number ── */
+      /* ── Section number + line entrance ── */
       gsap.fromTo(
         numberRef.current,
-        { x: -60, opacity: 0 },
+        { x: -50, opacity: 0 },
         {
           x: 0,
           opacity: 1,
           duration: 1.2,
           ease: "power4.out",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 75%",
-          },
+          scrollTrigger: { trigger: section, start: "top 80%" },
         }
       );
 
-      /* ── Decorative line ── */
       gsap.fromTo(
         lineRef.current,
         { scaleX: 0, transformOrigin: "left" },
@@ -81,14 +67,11 @@ export default function AboutSection() {
           scaleX: 1,
           duration: 1.8,
           ease: "power4.out",
-          scrollTrigger: {
-            trigger: section,
-            start: "top 70%",
-          },
+          scrollTrigger: { trigger: section, start: "top 75%" },
         }
       );
 
-      /* ── Title reveal ── */
+      /* ── Title words reveal ── */
       const titleWords = titleRef.current?.querySelectorAll(".word-unit");
       if (titleWords) {
         gsap.fromTo(
@@ -97,62 +80,103 @@ export default function AboutSection() {
           {
             y: "0%",
             opacity: 1,
-            stagger: 0.06,
-            duration: 1.4,
+            stagger: 0.08,
+            duration: 1.5,
             ease: "power4.out",
-            scrollTrigger: {
-              trigger: titleRef.current,
-              start: "top 80%",
-            },
+            scrollTrigger: { trigger: titleRef.current, start: "top 82%" },
           }
         );
       }
 
-      /* ── Paragraph reveals ── */
-      [text1Ref, text2Ref, text3Ref].forEach((ref, i) => {
-        gsap.fromTo(
-          ref.current,
-          { y: 40, opacity: 0, filter: "blur(6px)" },
-          {
-            y: 0,
-            opacity: 1,
-            filter: "blur(0px)",
-            duration: 1.2,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: ref.current,
-              start: "top 85%",
-            },
-            delay: i * 0.1,
-          }
-        );
-      });
-
-      /* ── Image frame ── */
+      /* ── Video parallax zoom ── */
       gsap.fromTo(
-        imageFrameRef.current,
-        { scale: 0.85, opacity: 0, filter: "blur(10px)" },
+        videoWrapRef.current,
+        { scale: 1.08 },
         {
           scale: 1,
-          opacity: 1,
-          filter: "blur(0px)",
-          duration: 1.6,
-          ease: "power4.out",
+          ease: "none",
           scrollTrigger: {
-            trigger: imageFrameRef.current,
-            start: "top 80%",
+            trigger: section,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 2,
           },
         }
       );
 
-      /* ── Stats counter ── */
+      /* ── Video entrance ── */
+      gsap.fromTo(
+        videoWrapRef.current,
+        { opacity: 0, x: 60 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 1.6,
+          ease: "power4.out",
+          scrollTrigger: { trigger: section, start: "top 70%" },
+        }
+      );
+
+      /* ── Progressive content blocks ── */
+      // Section outer height: 500vh, sticky height: 100vh → scrollable inner: 400vh
+      // Divide 400vh across 4 blocks, each gets 100vh of scroll to be active
+      const blocks = blockRefs.current.filter(Boolean) as HTMLDivElement[];
+      const segmentCount = blocks.length; // 4
+      const scrollableH = window.innerHeight * (segmentCount); // 400vh
+
+      // Block 0: visible immediately on scroll into view
+      gsap.set(blocks[0], { opacity: 1, y: 0 });
+      gsap.set(blocks.slice(1), { opacity: 0, y: 70 });
+
+      blocks.forEach((block, i) => {
+        const segStart = (i / segmentCount) * scrollableH;
+        const segEnd = ((i + 1) / segmentCount) * scrollableH;
+        const midpoint = (segStart + segEnd) / 2;
+
+        // Each block: enter at 20% of its segment, exit at 80%
+        if (i > 0) {
+          // Enter this block
+          ScrollTrigger.create({
+            trigger: section,
+            start: `top+=${segStart + scrollableH * 0.05 / segmentCount} top`,
+            end: `top+=${segStart + scrollableH * 0.22 / segmentCount} top`,
+            scrub: 1.2,
+            onUpdate: (self) => {
+              gsap.set(block, {
+                opacity: self.progress,
+                y: (1 - self.progress) * 70,
+                filter: `blur(${(1 - self.progress) * 6}px)`,
+              });
+            },
+          });
+        }
+
+        // Exit this block (if not last)
+        if (i < blocks.length - 1) {
+          ScrollTrigger.create({
+            trigger: section,
+            start: `top+=${midpoint + scrollableH * 0.1 / segmentCount} top`,
+            end: `top+=${segEnd} top`,
+            scrub: 1.2,
+            onUpdate: (self) => {
+              gsap.set(block, {
+                opacity: 1 - self.progress,
+                y: self.progress * -50,
+                filter: `blur(${self.progress * 4}px)`,
+              });
+            },
+          });
+        }
+      });
+
+      /* ── Stats section ── */
       gsap.fromTo(
         statsRef.current?.querySelectorAll(".stat-item") ?? [],
         { y: 30, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          stagger: 0.12,
+          stagger: 0.15,
           duration: 1,
           ease: "power3.out",
           scrollTrigger: {
@@ -162,304 +186,309 @@ export default function AboutSection() {
         }
       );
 
-      /* ── Side text rotated ── */
-      gsap.fromTo(
-        sideTextRef.current,
-        { opacity: 0, x: 20 },
-        {
-          opacity: 0.3,
-          x: 0,
-          duration: 1.5,
-          scrollTrigger: {
-            trigger: section,
-            start: "top 60%",
-          },
-        }
-      );
+      /* ── Autoplay video when in view ── */
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top 80%",
+        onEnter: () => videoRef.current?.play().catch(() => {}),
+        onLeave: () => videoRef.current?.pause(),
+        onEnterBack: () => videoRef.current?.play().catch(() => {}),
+      });
     }, section);
 
     return () => ctx.revert();
   }, []);
 
-  const titleWords = ["The Art", "of", "Desire"];
-
   return (
     <section
       ref={sectionRef}
       id="about"
-      className="relative min-h-screen overflow-hidden py-32 md:py-48"
-      style={{ backgroundColor: "var(--color-black)" }}
+      style={{
+        height: "500vh",
+        backgroundColor: "var(--color-black)",
+        position: "relative",
+      }}
     >
-      {/* Layered backgrounds */}
+      {/* Sticky container: full viewport, split 55/45 */}
       <div
-        ref={bgRef}
-        className="absolute inset-0 gpu"
+        ref={stickyRef}
         style={{
-          background:
-            "radial-gradient(ellipse 80% 60% at 50% 40%, rgba(139,0,0,0.08) 0%, transparent 70%)",
-        }}
-      />
-      <div
-        ref={layer1Ref}
-        className="absolute -top-1/4 -left-1/4 w-3/4 h-3/4 gpu"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, rgba(201,169,110,0.04) 0%, transparent 70%)",
-          borderRadius: "50%",
-        }}
-      />
-      <div
-        ref={layer2Ref}
-        className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 gpu"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, rgba(196,30,58,0.06) 0%, transparent 70%)",
-          borderRadius: "50%",
-        }}
-      />
-
-      {/* Side rotated text */}
-      <div
-        ref={sideTextRef}
-        className="absolute left-6 top-1/2 -translate-y-1/2 hidden md:block"
-        style={{
-          writingMode: "vertical-rl",
-          textOrientation: "mixed",
-          color: "var(--color-gold)",
-          fontSize: "0.55rem",
-          letterSpacing: "0.4em",
-          textTransform: "uppercase",
-          fontFamily: "var(--font-accent)",
-          fontWeight: 300,
-          transform: "rotate(180deg) translateY(50%)",
-          opacity: 0,
+          position: "sticky",
+          top: 0,
+          height: "100vh",
+          display: "grid",
+          gridTemplateColumns: "55% 45%",
+          overflow: "hidden",
         }}
       >
-        The Story of Velvet Kiss
-      </div>
+        {/* ── LEFT: scroll-driven editorial content ── */}
+        <div
+          style={{
+            position: "relative",
+            display: "flex",
+            flexDirection: "column",
+            padding: "clamp(3rem, 6vh, 5rem) clamp(2rem, 5vw, 4rem) clamp(3rem, 6vh, 5rem) clamp(2rem, 6vw, 5rem)",
+            overflow: "hidden",
+            zIndex: 2,
+          }}
+        >
+          {/* Section header strip */}
+          <div className="flex items-center gap-5 mb-10">
+            <div
+              ref={numberRef}
+              className="font-display italic opacity-0"
+              style={{
+                fontSize: "clamp(2rem, 4vw, 4rem)",
+                color: "rgba(201,168,152,0.2)",
+                lineHeight: 1,
+              }}
+            >
+              01
+            </div>
+            <div
+              ref={lineRef}
+              className="flex-1 h-px"
+              style={{
+                background:
+                  "linear-gradient(to right, var(--color-gold), transparent)",
+                transformOrigin: "left",
+              }}
+            />
+            <p
+              className="text-xs tracking-[0.4em] uppercase font-accent"
+              style={{ color: "var(--color-gold)", fontWeight: 300 }}
+            >
+              Our Story
+            </p>
+          </div>
 
-      <div className="container mx-auto px-8 md:px-16 max-w-7xl">
-        {/* Section number + line */}
-        <div className="flex items-center gap-6 mb-20">
+          {/* Permanent title */}
+          <div ref={titleRef} className="mb-10" aria-label="The Art of Desire">
+            {["The Art", "of", "Desire"].map((word, i) => (
+              <div key={i} className="overflow-hidden">
+                <div
+                  className="word-unit font-display italic"
+                  style={{
+                    fontSize: "clamp(3rem, 5.5vw, 6rem)",
+                    color:
+                      i === 1 ? "var(--color-gold)" : "var(--color-ivory)",
+                    lineHeight: 1.0,
+                    display: "block",
+                  }}
+                >
+                  {word}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Content blocks — absolute positioned, swap on scroll */}
+          <div style={{ position: "relative", flex: 1 }}>
+            {CONTENT_BLOCKS.map((block, i) => (
+              <div
+                key={i}
+                ref={(el) => {
+                  blockRefs.current[i] = el;
+                }}
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-start",
+                  opacity: i === 0 ? 1 : 0,
+                }}
+              >
+                {/* Block label */}
+                <p
+                  className="text-xs tracking-[0.4em] uppercase font-accent mb-4"
+                  style={{ color: block.accent, fontWeight: 300 }}
+                >
+                  {block.label}
+                </p>
+
+                {/* Block heading */}
+                <h3
+                  className="font-display italic mb-5"
+                  style={{
+                    fontSize: "clamp(1.8rem, 3vw, 2.8rem)",
+                    color: "var(--color-ivory)",
+                    lineHeight: 1.1,
+                    letterSpacing: "-0.01em",
+                  }}
+                >
+                  {block.heading}
+                </h3>
+
+                {/* Divider */}
+                <div
+                  className="mb-6 w-16 h-px"
+                  style={{ backgroundColor: block.accent, opacity: 0.5 }}
+                />
+
+                {/* Body copy */}
+                <p
+                  className="font-body leading-relaxed"
+                  style={{
+                    color: "rgba(250,246,240,0.7)",
+                    fontSize: "clamp(0.9rem, 1.2vw, 1.05rem)",
+                    letterSpacing: "0.02em",
+                    maxWidth: "38ch",
+                  }}
+                >
+                  {block.body}
+                </p>
+
+                {/* Progress dots */}
+                <div className="flex items-center gap-2 mt-8">
+                  {CONTENT_BLOCKS.map((_, j) => (
+                    <div
+                      key={j}
+                      style={{
+                        width: j === i ? "2rem" : "0.4rem",
+                        height: "1px",
+                        backgroundColor:
+                          j === i ? block.accent : "rgba(201,168,152,0.2)",
+                        transition: "width 0.4s",
+                      }}
+                    />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Stats — at bottom of left panel */}
           <div
-            ref={numberRef}
-            className="font-display italic opacity-0"
+            ref={statsRef}
+            className="grid grid-cols-3 gap-6 pt-8 border-t"
+            style={{ borderColor: "rgba(201,168,152,0.1)" }}
+          >
+            {[
+              { value: "48", unit: "Shades", label: "Curated" },
+              { value: "24K", unit: "Gold", label: "Infused" },
+              { value: "99", unit: "%", label: "Natural" },
+            ].map((stat) => (
+              <div key={stat.label} className="stat-item opacity-0">
+                <div
+                  className="font-display"
+                  style={{
+                    fontSize: "clamp(1.8rem, 3vw, 2.8rem)",
+                    color: "var(--color-gold)",
+                    lineHeight: 1,
+                  }}
+                >
+                  {stat.value}
+                  <span
+                    style={{ color: "var(--color-blush)", fontSize: "55%" }}
+                  >
+                    {stat.unit}
+                  </span>
+                </div>
+                <p
+                  className="text-xs tracking-[0.25em] uppercase font-accent mt-1"
+                  style={{ color: "rgba(237,213,200,0.4)", fontWeight: 300 }}
+                >
+                  {stat.label}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── RIGHT: sticky video ── */}
+        <div
+          style={{
+            position: "relative",
+            overflow: "hidden",
+          }}
+        >
+          {/* Video */}
+          <div
+            ref={videoWrapRef}
             style={{
-              fontSize: "clamp(3rem, 6vw, 5rem)",
-              color: "rgba(201,169,110,0.2)",
-              lineHeight: 1,
+              position: "absolute",
+              inset: 0,
+              opacity: 0,
             }}
           >
-            01
+            <video
+              ref={videoRef}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+              muted
+              loop
+              playsInline
+              preload="metadata"
+            >
+              <source
+                src="/video/Create_a_single_continuous_sho.mp4"
+                type="video/mp4"
+              />
+              <source
+                src="/video/Create_a_vertical_luxury (1).mp4"
+                type="video/mp4"
+              />
+            </video>
+
+            {/* Left fade — blends video into left content */}
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background:
+                  "linear-gradient(to right, var(--color-black) 0%, rgba(8,5,8,0.5) 18%, transparent 40%)",
+                pointerEvents: "none",
+              }}
+            />
+
+            {/* Bottom fade */}
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background:
+                  "linear-gradient(to top, var(--color-black) 0%, transparent 25%)",
+                pointerEvents: "none",
+              }}
+            />
+
+            {/* Subtle color grade overlay */}
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background:
+                  "linear-gradient(135deg, rgba(46,16,32,0.25) 0%, transparent 60%)",
+                mixBlendMode: "multiply",
+                pointerEvents: "none",
+              }}
+            />
           </div>
+
+          {/* Side rotated label */}
           <div
-            ref={lineRef}
-            className="flex-1 h-px"
-            style={{ background: "linear-gradient(to right, var(--color-gold), transparent)", transformOrigin: "left" }}
-          />
-          <p
-            className="text-xs tracking-[0.4em] uppercase font-accent"
-            style={{ color: "var(--color-gold)", fontWeight: 300 }}
+            className="absolute right-5 top-1/2 hidden lg:block"
+            style={{
+              writingMode: "vertical-rl",
+              textOrientation: "mixed",
+              color: "rgba(201,168,152,0.25)",
+              fontSize: "0.5rem",
+              letterSpacing: "0.45em",
+              textTransform: "uppercase",
+              fontFamily: "var(--font-accent)",
+              fontWeight: 300,
+              transform: "rotate(180deg) translateY(50%)",
+              zIndex: 10,
+            }}
           >
-            Our Story
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 items-start">
-          {/* Left: text column */}
-          <div>
-            {/* Title */}
-            <div ref={titleRef} aria-label="The Art of Desire">
-              {titleWords.map((word, i) => (
-                <div key={i} className="overflow-hidden">
-                  <div
-                    className="word-unit font-display italic"
-                    style={{
-                      fontSize: "clamp(3.5rem, 7vw, 7rem)",
-                      color: i === 1 ? "var(--color-gold)" : "var(--color-ivory)",
-                      lineHeight: 1.0,
-                      display: "block",
-                    }}
-                  >
-                    {word}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-12 space-y-6">
-              <p
-                ref={text1Ref}
-                className="font-body leading-relaxed opacity-0"
-                style={{
-                  color: "rgba(245,230,200,0.75)",
-                  fontSize: "1.05rem",
-                  letterSpacing: "0.02em",
-                }}
-              >
-                Born from the intersection of haute couture and sensory art,
-                Velvet Kiss is not merely a lipstick — it is a declaration. Each
-                shade is a mood distilled into pigment, a feeling crystallised
-                into form.
-              </p>
-              <p
-                ref={text2Ref}
-                className="font-body leading-relaxed opacity-0"
-                style={{
-                  color: "rgba(245,230,200,0.55)",
-                  fontSize: "0.95rem",
-                  letterSpacing: "0.02em",
-                }}
-              >
-                We source only the rarest ingredients — Moroccan rose wax,
-                Damascus oud extract, and 24-karat gold micro-particles — to
-                create a formula that nourishes as it adorns.
-              </p>
-              <p
-                ref={text3Ref}
-                className="font-body leading-relaxed opacity-0"
-                style={{
-                  color: "rgba(245,230,200,0.4)",
-                  fontSize: "0.9rem",
-                  letterSpacing: "0.02em",
-                }}
-              >
-                Every tube is hand-finished. Every shade is named after a
-                feeling. Because luxury is not an object — it is an experience.
-              </p>
-            </div>
-
-            {/* Stats */}
-            <div
-              ref={statsRef}
-              className="mt-14 grid grid-cols-3 gap-8"
-            >
-              {[
-                { value: "48", unit: "Shades", label: "Curated" },
-                { value: "24K", unit: "Gold", label: "Infused" },
-                { value: "99", unit: "%", label: "Natural" },
-              ].map((stat) => (
-                <div key={stat.label} className="stat-item opacity-0">
-                  <div
-                    className="font-display"
-                    style={{
-                      fontSize: "clamp(2rem, 4vw, 3.5rem)",
-                      color: "var(--color-gold)",
-                      lineHeight: 1,
-                    }}
-                  >
-                    {stat.value}
-                    <span style={{ color: "var(--color-blush)", fontSize: "60%" }}>
-                      {stat.unit}
-                    </span>
-                  </div>
-                  <p
-                    className="text-xs tracking-[0.25em] uppercase font-accent mt-1"
-                    style={{ color: "rgba(245,230,200,0.4)", fontWeight: 300 }}
-                  >
-                    {stat.label}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right: image frame */}
-          <div className="relative flex items-start justify-center mt-8 md:mt-0">
-            <div
-              ref={imageFrameRef}
-              className="relative opacity-0 gpu"
-              style={{ width: "100%", maxWidth: 480 }}
-            >
-              {/* Outer frame decoration */}
-              <div
-                className="absolute -inset-3 border"
-                style={{ borderColor: "rgba(201,169,110,0.15)" }}
-              />
-              <div
-                className="absolute -top-6 -left-6 w-12 h-12"
-                style={{ borderTop: "2px solid var(--color-gold)", borderLeft: "2px solid var(--color-gold)" }}
-              />
-              <div
-                className="absolute -bottom-6 -right-6 w-12 h-12"
-                style={{ borderBottom: "2px solid var(--color-gold)", borderRight: "2px solid var(--color-gold)" }}
-              />
-
-              {/* Image placeholder with luxury gradient */}
-              <div
-                className="w-full aspect-[3/4] relative overflow-hidden"
-                style={{ backgroundColor: "var(--color-deep)" }}
-              >
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, rgba(139,0,0,0.3) 0%, rgba(10,6,8,0.8) 50%, rgba(201,169,110,0.1) 100%)",
-                  }}
-                />
-                {/* Decorative center element */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div
-                      className="font-display italic"
-                      style={{
-                        fontSize: "6rem",
-                        color: "rgba(201,169,110,0.12)",
-                        lineHeight: 1,
-                      }}
-                    >
-                      VK
-                    </div>
-                    <div
-                      className="w-16 h-px mx-auto my-4"
-                      style={{ backgroundColor: "rgba(201,169,110,0.2)" }}
-                    />
-                    <p
-                      className="text-xs tracking-[0.4em] uppercase font-accent"
-                      style={{ color: "rgba(201,169,110,0.3)", fontWeight: 300 }}
-                    >
-                      Maison de Beauté
-                    </p>
-                  </div>
-                </div>
-
-                {/* Shimmer effect */}
-                <div
-                  className="absolute inset-0 gpu"
-                  style={{
-                    background:
-                      "linear-gradient(105deg, transparent 40%, rgba(201,169,110,0.04) 50%, transparent 60%)",
-                    animation: "shimmer 4s ease-in-out infinite",
-                  }}
-                />
-              </div>
-
-              {/* Caption */}
-              <div className="mt-4 flex items-center justify-between">
-                <p
-                  className="text-xs tracking-[0.25em] uppercase font-accent"
-                  style={{ color: "rgba(201,169,110,0.5)", fontWeight: 300 }}
-                >
-                  The Atelier
-                </p>
-                <p
-                  className="text-xs font-body italic"
-                  style={{ color: "rgba(245,230,200,0.3)" }}
-                >
-                  Paris, 2024
-                </p>
-              </div>
-            </div>
+            The Story of Velvet Kiss
           </div>
         </div>
       </div>
-
-      <style>{`
-        @keyframes shimmer {
-          0%, 100% { transform: translateX(-100%); }
-          50% { transform: translateX(100%); }
-        }
-      `}</style>
     </section>
   );
 }

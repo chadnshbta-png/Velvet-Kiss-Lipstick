@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "@/lib/gsap-config";
-import { ScrollTrigger } from "@/lib/gsap-config";
 import MagneticButton from "@/components/ui/MagneticButton";
 
 export default function CTASection() {
@@ -147,18 +146,18 @@ export default function CTASection() {
           width: "min(60vw, 600px)",
           height: "min(60vw, 600px)",
           borderRadius: "50%",
-          border: "1px solid rgba(201,169,110,0.06)",
+          border: "1px solid rgba(201,168,152,0.06)",
           opacity: 0,
           pointerEvents: "none",
         }}
       >
         <div
           className="absolute inset-6 rounded-full"
-          style={{ border: "1px solid rgba(201,169,110,0.04)" }}
+          style={{ border: "1px solid rgba(201,168,152,0.04)" }}
         />
         <div
           className="absolute inset-12 rounded-full"
-          style={{ border: "1px solid rgba(201,169,110,0.03)" }}
+          style={{ border: "1px solid rgba(201,168,152,0.03)" }}
         />
       </div>
 
@@ -168,7 +167,7 @@ export default function CTASection() {
           <div
             ref={numberRef}
             className="font-display italic opacity-0"
-            style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "rgba(201,169,110,0.2)", lineHeight: 1 }}
+            style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "rgba(201,168,152,0.2)", lineHeight: 1 }}
           >
             06
           </div>
@@ -217,7 +216,7 @@ export default function CTASection() {
                   color: "var(--color-gold)",
                   display: "block",
                   letterSpacing: "-0.03em",
-                  textShadow: "0 0 120px rgba(201,169,110,0.15)",
+                  textShadow: "0 0 120px rgba(201,168,152,0.15)",
                 }}
               >
                 {words.line2[0]}
@@ -276,7 +275,7 @@ export default function CTASection() {
           <MagneticButton
             className="text-sm tracking-[0.35em] uppercase font-accent px-12 py-5 border"
             style={{
-              borderColor: "rgba(201,169,110,0.4)",
+              borderColor: "rgba(201,168,152,0.4)",
               color: "var(--color-champagne)",
               fontWeight: 300,
             } as React.CSSProperties}

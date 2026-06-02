@@ -8,6 +8,10 @@ const TOTAL_FRAMES = 240;
 const FRAME_PATH = (i: number) =>
   `/frame/First-${String(i).padStart(4, "0")}.png`;
 
+// Text appears when sequence reaches this frame (~94% progress)
+const TEXT_APPEAR_FRAME = 226;
+const TEXT_APPEAR_PROGRESS = TEXT_APPEAR_FRAME / TOTAL_FRAMES; // ~0.942
+
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -20,6 +24,7 @@ export default function HeroSection() {
   const taglineRef = useRef<HTMLParagraphElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
+  const bottomBarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -38,7 +43,6 @@ export default function HeroSection() {
     /* ── Pre-load all frames ── */
     const images: HTMLImageElement[] = new Array(TOTAL_FRAMES);
     imagesRef.current = images;
-    let loadedCount = 0;
 
     const drawFrame = (index: number) => {
       const img = images[index];
@@ -63,18 +67,45 @@ export default function HeroSection() {
       img.src = FRAME_PATH(i + 1);
       img.onload = () => {
         images[i] = img;
-        loadedCount++;
         if (i === 0) drawFrame(0);
       };
     }
 
+    /* ── Set all text to hidden initially ── */
+    gsap.set(
+      [taglineRef.current, headlineRef.current, sublineRef.current, ctaRef.current, scrollHintRef.current, bottomBarRef.current],
+      { opacity: 0 }
+    );
+
+    /* ── Set 3D initial positions for cinematic emergence ── */
+    gsap.set(headlineRef.current, {
+      z: -500,
+      scale: 0.6,
+      filter: "blur(28px)",
+    });
+    gsap.set(taglineRef.current, {
+      z: -300,
+      scale: 0.78,
+      filter: "blur(18px)",
+    });
+    gsap.set(sublineRef.current, {
+      z: -350,
+      scale: 0.75,
+      filter: "blur(20px)",
+    });
+    gsap.set(ctaRef.current, { y: 50 });
+    gsap.set(scrollHintRef.current, { y: 10 });
+
     /* ── ScrollTrigger: scrub frames ── */
-    const st = ScrollTrigger.create({
+    const heroScrollDist = window.innerHeight * 5;
+
+    const frameST = ScrollTrigger.create({
       trigger: sectionRef.current,
       start: "top top",
-      end: `+=${window.innerHeight * 5}`,
+      end: `+=${heroScrollDist}`,
       pin: true,
       scrub: 0.5,
+      anticipatePin: 1,
       onUpdate: (self) => {
         const frameIndex = Math.min(
           TOTAL_FRAMES - 1,
@@ -87,63 +118,94 @@ export default function HeroSection() {
       },
     });
 
-    /* ── Hero text entrance ── */
-    const tl = gsap.timeline({ delay: 0.3 });
+    /* ── Cinematic text emergence — scroll-driven z-space reveal ── */
+    // Starts at 78% of hero scroll, fully revealed at 97%
+    // Maps to frame range: ~187–233 (near First-0226)
+    const textTl = gsap.timeline({ paused: true });
 
-    tl.fromTo(
-      headlineRef.current,
-      { y: 60, opacity: 0, filter: "blur(12px)" },
-      { y: 0, opacity: 1, filter: "blur(0px)", duration: 1.6, ease: "power4.out" }
-    )
-      .fromTo(
+    textTl
+      .to(taglineRef.current, {
+        opacity: 1,
+        z: 0,
+        scale: 1,
+        filter: "blur(0px)",
+        ease: "none",
+        duration: 0.35,
+      })
+      .to(
+        headlineRef.current,
+        {
+          opacity: 1,
+          z: 0,
+          scale: 1,
+          filter: "blur(0px)",
+          ease: "none",
+          duration: 0.45,
+        },
+        0.08
+      )
+      .to(
         sublineRef.current,
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" },
-        "-=1"
+        {
+          opacity: 1,
+          z: 0,
+          scale: 1,
+          filter: "blur(0px)",
+          ease: "none",
+          duration: 0.35,
+        },
+        0.18
       )
-      .fromTo(
-        taglineRef.current,
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, ease: "power2.out" },
-        "-=0.8"
-      )
-      .fromTo(
+      .to(
         ctaRef.current,
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" },
-        "-=0.6"
+        {
+          opacity: 1,
+          y: 0,
+          ease: "none",
+          duration: 0.25,
+        },
+        0.32
       )
-      .fromTo(
+      .to(
         scrollHintRef.current,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.8 },
-        "-=0.4"
+        {
+          opacity: 1,
+          y: 0,
+          ease: "none",
+          duration: 0.2,
+        },
+        0.45
+      )
+      .to(
+        bottomBarRef.current,
+        {
+          opacity: 1,
+          ease: "none",
+          duration: 0.15,
+        },
+        0.5
       );
 
-    /* ── Parallax text fade on scroll ── */
-    const section = sectionRef.current;
-    ScrollTrigger.create({
-      trigger: section,
-      start: "top top",
-      end: `+=${window.innerHeight * 1.5}`,
+    // Scroll window: 78%–97% of total hero scroll distance
+    const textST = ScrollTrigger.create({
+      trigger: sectionRef.current,
+      start: `top+=${heroScrollDist * 0.78} top`,
+      end: `top+=${heroScrollDist * 0.97} top`,
+      scrub: 1.8,
+      onUpdate: (self) => {
+        textTl.progress(self.progress);
+      },
+    });
+
+    /* ── Subtle overlay darkens as text appears ── */
+    const overlayST = ScrollTrigger.create({
+      trigger: sectionRef.current,
+      start: `top+=${heroScrollDist * 0.75} top`,
+      end: `top+=${heroScrollDist * 0.98} top`,
       scrub: true,
       onUpdate: (self) => {
-        const p = self.progress;
-        const elems = [
-          headlineRef.current,
-          sublineRef.current,
-          taglineRef.current,
-          ctaRef.current,
-          scrollHintRef.current,
-        ];
-        elems.forEach((el) => {
-          if (!el) return;
-          const ty = p * -120;
-          const op = 1 - p * 2.5;
-          gsap.set(el, { y: ty, opacity: Math.max(0, op) });
-        });
         if (overlayRef.current) {
-          gsap.set(overlayRef.current, { opacity: p * 0.7 });
+          gsap.set(overlayRef.current, { opacity: self.progress * 0.35 });
         }
       },
     });
@@ -153,13 +215,14 @@ export default function HeroSection() {
       y: 8,
       repeat: -1,
       yoyo: true,
-      duration: 1.2,
+      duration: 1.5,
       ease: "sine.inOut",
     });
 
     return () => {
-      st.kill();
-      ScrollTrigger.getAll().forEach((s) => s.kill());
+      frameST.kill();
+      textST.kill();
+      overlayST.kill();
       window.removeEventListener("resize", setSize);
     };
   }, []);
@@ -175,15 +238,23 @@ export default function HeroSection() {
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full gpu"
-        style={{ objectFit: "cover" }}
       />
 
-      {/* Depth overlay — vignette */}
+      {/* Vignette — soft edge darkening */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse at center, transparent 30%, rgba(10,6,8,0.65) 100%)",
+            "radial-gradient(ellipse at center, transparent 25%, rgba(8,5,8,0.70) 100%)",
+        }}
+      />
+
+      {/* Atmospheric top gradient */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(46,16,32,0.3) 0%, transparent 30%, transparent 70%, rgba(8,5,8,0.5) 100%)",
         }}
       />
 
@@ -194,47 +265,40 @@ export default function HeroSection() {
         style={{ backgroundColor: "var(--color-black)", opacity: 0 }}
       />
 
-      {/* Content */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
-        {/* Pre-headline */}
+      {/* 3D perspective container — enables z-space emergence */}
+      <div
+        className="absolute inset-0 flex flex-col items-center justify-center text-center px-6"
+        style={{ perspective: "1200px", perspectiveOrigin: "50% 50%" }}
+      >
+        {/* Pre-headline tagline */}
         <p
           ref={taglineRef}
-          className="text-xs tracking-[0.5em] uppercase font-accent mb-6 opacity-0"
+          className="text-xs tracking-[0.5em] uppercase font-accent mb-8"
           style={{ color: "var(--color-gold)", fontWeight: 300 }}
         >
           Maison de Beauté · Est. 2024
         </p>
 
         {/* Main headline */}
-        <div
-          ref={headlineRef}
-          className="overflow-hidden opacity-0"
-        >
+        <div ref={headlineRef}>
           <h1
             className="font-display italic leading-none"
             style={{
-              fontSize: "clamp(4rem, 14vw, 14rem)",
+              fontSize: "clamp(4rem, 13vw, 13rem)",
               color: "var(--color-ivory)",
               letterSpacing: "-0.02em",
               lineHeight: 0.9,
-              textShadow: "0 0 80px rgba(201,169,110,0.15)",
+              textShadow: "0 0 100px rgba(201,168,152,0.12)",
             }}
           >
             Velvet
             <br />
-            <span
-              style={{
-                color: "var(--color-gold)",
-                WebkitTextStroke: "0",
-              }}
-            >
-              Kiss
-            </span>
+            <span style={{ color: "var(--color-gold)" }}>Kiss</span>
           </h1>
         </div>
 
         {/* Sub headline */}
-        <div ref={sublineRef} className="mt-6 opacity-0">
+        <div ref={sublineRef} className="mt-7">
           <p
             className="text-sm md:text-base tracking-[0.4em] uppercase font-accent"
             style={{ color: "var(--color-blush)", fontWeight: 200 }}
@@ -247,11 +311,11 @@ export default function HeroSection() {
         </div>
 
         {/* CTA */}
-        <div ref={ctaRef} className="mt-10 opacity-0">
+        <div ref={ctaRef} className="mt-10">
           <button
-            className="text-xs tracking-[0.35em] uppercase font-accent px-10 py-4 relative overflow-hidden group"
+            className="text-xs tracking-[0.35em] uppercase font-accent px-10 py-4 relative"
             style={{
-              border: "1px solid rgba(201,169,110,0.5)",
+              border: "1px solid rgba(201,168,152,0.4)",
               color: "var(--color-champagne)",
               fontWeight: 300,
             }}
@@ -260,15 +324,15 @@ export default function HeroSection() {
                 borderColor: "var(--color-gold)",
                 color: "var(--color-black)",
                 backgroundColor: "var(--color-gold)",
-                duration: 0.3,
+                duration: 0.35,
               });
             }}
             onMouseLeave={(e) => {
               gsap.to(e.currentTarget, {
-                borderColor: "rgba(201,169,110,0.5)",
+                borderColor: "rgba(201,168,152,0.4)",
                 color: "var(--color-champagne)",
                 backgroundColor: "transparent",
-                duration: 0.3,
+                duration: 0.35,
               });
             }}
           >
@@ -279,50 +343,54 @@ export default function HeroSection() {
 
       {/* Bottom bar */}
       <div
+        ref={bottomBarRef}
         className="absolute bottom-0 left-0 right-0 px-8 md:px-16 pb-8 flex items-end justify-between"
       >
         <p
           className="text-xs tracking-[0.2em] uppercase font-accent"
-          style={{ color: "rgba(245,230,200,0.4)", fontWeight: 300 }}
+          style={{ color: "rgba(237,213,200,0.35)", fontWeight: 300 }}
         >
           Scroll to explore
         </p>
 
-        <div ref={scrollHintRef} className="opacity-0 flex flex-col items-center gap-2">
+        <div ref={scrollHintRef} className="flex flex-col items-center gap-2">
           <span
-            className="text-xs tracking-widest font-accent"
+            className="font-accent"
             style={{ color: "var(--color-gold)", fontSize: "0.6rem" }}
           >
             ↓
           </span>
           <div
             className="w-px h-12"
-            style={{ background: "linear-gradient(to bottom, var(--color-gold), transparent)" }}
+            style={{
+              background:
+                "linear-gradient(to bottom, var(--color-gold), transparent)",
+            }}
           />
         </div>
 
         <p
           className="text-xs tracking-[0.2em] uppercase font-accent hidden md:block"
-          style={{ color: "rgba(245,230,200,0.4)", fontWeight: 300 }}
+          style={{ color: "rgba(237,213,200,0.35)", fontWeight: 300 }}
         >
           Luxury Lipstick
         </p>
       </div>
 
-      {/* Corner decoration */}
+      {/* Corner decorations */}
       <div
         className="absolute top-28 left-8 hidden md:block"
-        style={{ color: "rgba(201,169,110,0.3)" }}
+        style={{ color: "rgba(201,168,152,0.25)" }}
       >
-        <div className="w-16 h-px" style={{ backgroundColor: "currentColor" }} />
-        <div className="w-px h-16" style={{ backgroundColor: "currentColor" }} />
+        <div className="w-14 h-px" style={{ backgroundColor: "currentColor" }} />
+        <div className="w-px h-14" style={{ backgroundColor: "currentColor" }} />
       </div>
       <div
         className="absolute top-28 right-8 hidden md:block"
-        style={{ color: "rgba(201,169,110,0.3)" }}
+        style={{ color: "rgba(201,168,152,0.25)" }}
       >
-        <div className="w-16 h-px ml-auto" style={{ backgroundColor: "currentColor" }} />
-        <div className="w-px h-16 ml-auto" style={{ backgroundColor: "currentColor" }} />
+        <div className="w-14 h-px ml-auto" style={{ backgroundColor: "currentColor" }} />
+        <div className="w-px h-14 ml-auto" style={{ backgroundColor: "currentColor" }} />
       </div>
     </section>
   );

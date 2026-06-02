@@ -23,67 +23,69 @@ export default function VideoSection() {
         scrollTrigger: {
           trigger: wrapRef.current,
           start: "top top",
-          end: `+=${window.innerHeight * 3}`,
+          end: `+=${window.innerHeight * 4}`,
           pin: true,
-          scrub: 0.8,
+          scrub: 1,
           anticipatePin: 1,
         },
       });
 
-      // Phase 1 (0–0.25): Logo appears
+      // Phase 1: Logo appears with depth
       tl.fromTo(
         logoRef.current,
-        { opacity: 0, scale: 0.85, filter: "blur(8px)" },
-        { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.3, ease: "power3.out" }
+        { opacity: 0, scale: 0.82, filter: "blur(12px)", y: 20 },
+        { opacity: 1, scale: 1, filter: "blur(0px)", y: 0, duration: 0.28, ease: "power3.out" }
       );
 
-      // Phase 2 (0.25–0.45): Video wrapper appears below logo
+      // Phase 2: Video wrapper appears small
       tl.fromTo(
         videoWrapRef.current,
-        { opacity: 0, y: 60, scale: 0.6 },
-        { opacity: 1, y: 0, scale: 0.6, duration: 0.25, ease: "power3.out" },
-        "+=0.05"
+        { opacity: 0, scale: 0.55, y: 50 },
+        { opacity: 1, scale: 0.55, y: 0, duration: 0.22, ease: "power3.out" },
+        "+=0.06"
       );
 
-      // Phase 3 (0.45–1): Video scales to near-fullscreen
+      // Phase 3: Video expands to near-fullscreen (88vw)
       tl.to(
         videoWrapRef.current,
         {
           scale: 1,
           borderRadius: 0,
-          duration: 0.6,
+          duration: 0.65,
           ease: "power3.inOut",
         },
-        "+=0.05"
+        "+=0.04"
       );
 
       // Logo fades as video expands
       tl.to(
         logoRef.current,
-        { opacity: 0, y: -40, duration: 0.25, ease: "power2.in" },
-        "<0.1"
+        { opacity: 0, y: -50, scale: 0.9, duration: 0.22, ease: "power2.in" },
+        "<0.08"
       );
 
-      // Overlay darkens subtly
+      // Overlay adds subtle warmth
       tl.to(
         overlayRef.current,
-        { opacity: 0.55, duration: 0.4, ease: "power2.out" },
+        { opacity: 0.45, duration: 0.35, ease: "power2.out" },
         "<"
       );
 
-      // Caption fades in
+      // Caption reveals
       tl.fromTo(
         captionRef.current,
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" },
-        "-=0.15"
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.28, ease: "power3.out" },
+        "-=0.12"
       );
 
-      // Text reveal
+      // Word-by-word text
       tl.fromTo(
-        textRevealRef.current ? Array.from(textRevealRef.current.querySelectorAll(".tr-word")) : [],
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, stagger: 0.05, duration: 0.3, ease: "power2.out" },
+        textRevealRef.current
+          ? Array.from(textRevealRef.current.querySelectorAll(".tr-word"))
+          : [],
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, stagger: 0.04, duration: 0.28, ease: "power2.out" },
         "-=0.1"
       );
 
@@ -94,26 +96,20 @@ export default function VideoSection() {
         {
           y: "0%",
           opacity: 1,
-          stagger: 0.07,
-          duration: 1.4,
+          stagger: 0.09,
+          duration: 1.6,
           ease: "power4.out",
-          scrollTrigger: { trigger: section, start: "top 75%" },
+          scrollTrigger: { trigger: section, start: "top 77%" },
         }
       );
 
-      /* ── Autoplay video when in view ── */
+      /* ── Autoplay video ── */
       ScrollTrigger.create({
         trigger: videoWrapRef.current,
-        start: "top 80%",
-        onEnter: () => {
-          videoRef.current?.play().catch(() => {});
-        },
-        onLeave: () => {
-          videoRef.current?.pause();
-        },
-        onEnterBack: () => {
-          videoRef.current?.play().catch(() => {});
-        },
+        start: "top 85%",
+        onEnter: () => videoRef.current?.play().catch(() => {}),
+        onLeave: () => videoRef.current?.pause(),
+        onEnterBack: () => videoRef.current?.play().catch(() => {}),
       });
     }, section);
 
@@ -128,16 +124,34 @@ export default function VideoSection() {
       style={{ backgroundColor: "var(--color-black)" }}
     >
       {/* Section header */}
-      <div className="container mx-auto px-8 md:px-16 max-w-7xl pt-32 pb-20">
-        <div className="flex items-center gap-6 mb-12">
+      <div
+        style={{
+          padding:
+            "clamp(5rem,8vh,7rem) clamp(1.5rem,5vw,5rem) clamp(2.5rem,4vh,4rem)",
+        }}
+      >
+        <div className="flex items-center gap-6 mb-10">
           <div
             className="font-display italic"
-            style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "rgba(201,169,110,0.2)", lineHeight: 1 }}
+            style={{
+              fontSize: "clamp(2rem, 4vw, 3.5rem)",
+              color: "rgba(201,168,152,0.2)",
+              lineHeight: 1,
+            }}
           >
             04
           </div>
-          <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, var(--color-gold), transparent)" }} />
-          <p className="text-xs tracking-[0.4em] uppercase font-accent" style={{ color: "var(--color-gold)", fontWeight: 300 }}>
+          <div
+            className="flex-1 h-px"
+            style={{
+              background:
+                "linear-gradient(to right, var(--color-gold), transparent)",
+            }}
+          />
+          <p
+            className="text-xs tracking-[0.4em] uppercase font-accent"
+            style={{ color: "var(--color-gold)", fontWeight: 300 }}
+          >
             The Film
           </p>
         </div>
@@ -148,9 +162,10 @@ export default function VideoSection() {
               <div
                 className="vs-word font-display italic"
                 style={{
-                  fontSize: "clamp(3.5rem, 8vw, 9rem)",
+                  fontSize: "clamp(3rem, 8vw, 9rem)",
                   lineHeight: 0.95,
-                  color: i === 1 ? "var(--color-gold)" : "var(--color-ivory)",
+                  color:
+                    i === 1 ? "var(--color-gold)" : "var(--color-ivory)",
                   display: "block",
                 }}
               >
@@ -161,21 +176,29 @@ export default function VideoSection() {
         </div>
       </div>
 
-      {/* Pinned video showcase */}
+      {/* Pinned cinematic showcase */}
       <div
         ref={wrapRef}
         className="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden"
         style={{ backgroundColor: "var(--color-deep)" }}
       >
-        {/* Background glow */}
+        {/* Atmospheric glow */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(139,0,0,0.1) 0%, transparent 70%)",
+            background:
+              "radial-gradient(ellipse 55% 45% at 50% 50%, rgba(139,0,0,0.09) 0%, transparent 70%)",
+          }}
+        />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 100% 50% at 50% 110%, rgba(23,14,28,0.8) 0%, transparent 55%)",
           }}
         />
 
-        {/* Brand logo */}
+        {/* Brand logo — shown before video expands */}
         <div
           ref={logoRef}
           className="absolute z-10 text-center"
@@ -184,34 +207,49 @@ export default function VideoSection() {
           <div
             className="font-display italic"
             style={{
-              fontSize: "clamp(3rem, 8vw, 7rem)",
+              fontSize: "clamp(3rem, 7vw, 7rem)",
               color: "var(--color-ivory)",
               letterSpacing: "-0.02em",
               lineHeight: 1,
-              textShadow: "0 0 60px rgba(201,169,110,0.2)",
+              textShadow: "0 0 80px rgba(201,168,152,0.18)",
             }}
           >
             Velvet
             <span style={{ color: "var(--color-gold)" }}> Kiss</span>
           </div>
-          <div className="flex items-center gap-4 mt-4 justify-center">
-            <div className="h-px w-16" style={{ background: "linear-gradient(to right, transparent, var(--color-gold))" }} />
-            <p className="text-xs tracking-[0.5em] uppercase font-accent" style={{ color: "var(--color-gold)", fontWeight: 300 }}>
+          <div className="flex items-center gap-4 mt-5 justify-center">
+            <div
+              className="h-px w-16"
+              style={{
+                background:
+                  "linear-gradient(to right, transparent, var(--color-gold))",
+              }}
+            />
+            <p
+              className="text-xs tracking-[0.5em] uppercase font-accent"
+              style={{ color: "var(--color-gold)", fontWeight: 300 }}
+            >
               The Film
             </p>
-            <div className="h-px w-16" style={{ background: "linear-gradient(to left, transparent, var(--color-gold))" }} />
+            <div
+              className="h-px w-16"
+              style={{
+                background:
+                  "linear-gradient(to left, transparent, var(--color-gold))",
+              }}
+            />
           </div>
         </div>
 
-        {/* Video wrapper */}
+        {/* Video wrapper — expands from 55% to 88% viewport width */}
         <div
           ref={videoWrapRef}
           className="absolute gpu overflow-hidden"
           style={{
-            width: "min(80vw, 900px)",
-            height: "min(45vw, 506px)",
-            borderRadius: "4px",
-            border: "1px solid rgba(201,169,110,0.2)",
+            width: "min(88vw, 1440px)",
+            height: "min(49.5vw, 810px)",
+            borderRadius: "6px",
+            border: "1px solid rgba(201,168,152,0.15)",
             opacity: 0,
             transformOrigin: "center center",
           }}
@@ -224,11 +262,27 @@ export default function VideoSection() {
             playsInline
             preload="metadata"
           >
-            <source src="/video/Create_a_single_continuous_sho.mp4" type="video/mp4" />
-            <source src="/video/Create_a_vertical_luxury (1).mp4" type="video/mp4" />
+            <source
+              src="/video/Create_a_single_continuous_sho.mp4"
+              type="video/mp4"
+            />
+            <source
+              src="/video/Create_a_vertical_luxury (1).mp4"
+              type="video/mp4"
+            />
           </video>
 
-          {/* Video overlay */}
+          {/* Warm color grade */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(46,16,32,0.2) 0%, transparent 50%)",
+              mixBlendMode: "multiply",
+            }}
+          />
+
+          {/* Scroll overlay */}
           <div
             ref={overlayRef}
             className="absolute inset-0 pointer-events-none"
@@ -236,33 +290,38 @@ export default function VideoSection() {
           />
         </div>
 
-        {/* Caption overlay */}
+        {/* Caption — appears over expanded video */}
         <div
           ref={captionRef}
-          className="absolute bottom-16 left-1/2 -translate-x-1/2 text-center z-10"
+          className="absolute bottom-14 left-1/2 -translate-x-1/2 text-center z-10"
           style={{ opacity: 0 }}
         >
           <div ref={textRevealRef}>
-            {["A", "film", "for", "those", "who", "dare", "to", "be", "desired"].map((word, i) => (
-              <span
-                key={i}
-                className="tr-word font-display italic inline-block mr-3"
-                style={{
-                  fontSize: "clamp(1.2rem, 3vw, 2.5rem)",
-                  color: i % 3 === 1 ? "var(--color-gold)" : "var(--color-ivory)",
-                  opacity: 0,
-                }}
-              >
-                {word}
-              </span>
-            ))}
+            {["A", "film", "for", "those", "who", "dare", "to", "be", "desired"].map(
+              (word, i) => (
+                <span
+                  key={i}
+                  className="tr-word font-display italic inline-block mr-3"
+                  style={{
+                    fontSize: "clamp(1rem, 2.5vw, 2.2rem)",
+                    color:
+                      i % 3 === 1
+                        ? "var(--color-gold)"
+                        : "var(--color-ivory)",
+                    opacity: 0,
+                  }}
+                >
+                  {word}
+                </span>
+              )
+            )}
           </div>
         </div>
 
-        {/* Sound indicator */}
+        {/* Muted indicator */}
         <div
           className="absolute bottom-8 right-8 flex items-center gap-2 z-10"
-          style={{ color: "rgba(245,230,200,0.4)" }}
+          style={{ color: "rgba(237,213,200,0.35)" }}
         >
           <div className="flex items-end gap-0.5 h-4">
             {[1, 2, 3, 4].map((i) => (
@@ -277,7 +336,10 @@ export default function VideoSection() {
               />
             ))}
           </div>
-          <span className="text-xs tracking-widest font-accent" style={{ fontWeight: 300, fontSize: "0.6rem" }}>
+          <span
+            className="text-xs tracking-widest font-accent"
+            style={{ fontWeight: 300, fontSize: "0.6rem" }}
+          >
             MUTED
           </span>
         </div>
