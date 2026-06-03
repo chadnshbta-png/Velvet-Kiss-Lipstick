@@ -167,7 +167,7 @@ export default function VideoSection() {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse 70% 55% at 50% 50%, rgba(70,14,30,0.08) 0%, transparent 70%)",
+              "radial-gradient(ellipse 70% 55% at 50% 50%, rgba(155,30,50,0.06) 0%, transparent 70%)",
           }}
         />
 
@@ -184,7 +184,7 @@ export default function VideoSection() {
               color: "var(--color-ivory)",
               letterSpacing: "-0.02em",
               lineHeight: 1,
-              textShadow: "0 0 80px rgba(201,168,152,0.18)",
+              textShadow: "0 0 80px rgba(155,30,50,0.12)",
             }}
           >
             Velvet
@@ -222,7 +222,7 @@ export default function VideoSection() {
             width: "min(88vw, 1440px)",
             height: "min(56.25vw, 810px)",   /* 16:9 on mobile, capped at 810px on wide screens */
             borderRadius: "6px",
-            border: "1px solid rgba(201,168,152,0.15)",
+            border: "1px solid rgba(155,30,50,0.15)",
             opacity: 0,
             transformOrigin: "center center",
           }}
@@ -250,7 +250,7 @@ export default function VideoSection() {
             className="absolute inset-0 pointer-events-none"
             style={{
               background:
-                "linear-gradient(135deg, rgba(46,16,32,0.2) 0%, transparent 50%)",
+                "linear-gradient(135deg, rgba(155,30,50,0.07) 0%, transparent 50%)",
               mixBlendMode: "multiply",
             }}
           />
@@ -280,7 +280,7 @@ export default function VideoSection() {
                     color:
                       i % 3 === 1
                         ? "var(--color-gold)"
-                        : "var(--color-ivory)",
+                        : "#FAF6F1",
                     opacity: 0,
                   }}
                 >
@@ -294,7 +294,7 @@ export default function VideoSection() {
         {/* Muted indicator */}
         <div
           className="absolute bottom-8 right-8 flex items-center gap-2 z-10"
-          style={{ color: "rgba(237,213,200,0.35)" }}
+          style={{ color: "rgba(250,246,241,0.42)" }}
         >
           <div className="flex items-end gap-0.5 h-4">
             {[1, 2, 3, 4].map((i) => (

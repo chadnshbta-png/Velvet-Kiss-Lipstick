@@ -10,15 +10,15 @@ const config: Config = {
     extend: {
       colors: {
         velvet: {
-          black: "#0a0608",
-          deep: "#120d0f",
-          crimson: "#8B0000",
-          rose: "#C41E3A",
-          blush: "#E8B4B8",
-          gold: "#C9A96E",
-          champagne: "#F5E6C8",
-          ivory: "#FAF6F0",
-          pearl: "#F8F4EE",
+          black: "#FAF6F1",
+          deep: "#F2E6DA",
+          crimson: "#7D1828",
+          rose: "#B52240",
+          blush: "#B8606E",
+          gold: "#9B1E32",
+          champagne: "#C8A898",
+          ivory: "#2C1F22",
+          pearl: "#5C4049",
         },
       },
       fontFamily: {

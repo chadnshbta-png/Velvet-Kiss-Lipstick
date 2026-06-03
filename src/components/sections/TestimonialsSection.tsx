@@ -195,7 +195,7 @@ export default function TestimonialsSection() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 65% 45% at 70% 50%, rgba(100,38,60,0.07) 0%, transparent 70%)",
+            "radial-gradient(ellipse 65% 45% at 70% 50%, rgba(155,30,50,0.05) 0%, transparent 70%)",
         }}
       />
 
@@ -265,7 +265,7 @@ export default function TestimonialsSection() {
                   y: -12,
                   rotateZ: 0,
                   boxShadow:
-                    "0 32px 80px rgba(139,0,0,0.2), 0 8px 24px rgba(46,16,32,0.3)",
+                    "0 20px 60px rgba(155,30,50,0.12), 0 6px 20px rgba(44,31,34,0.08)",
                   duration: 0.5,
                   ease: "power3.out",
                 });
@@ -273,7 +273,7 @@ export default function TestimonialsSection() {
                 const inner = cardEl.querySelector(".card-inner") as HTMLElement;
                 if (inner) {
                   gsap.to(inner, {
-                    borderColor: "rgba(201,168,152,0.45)",
+                    borderColor: "rgba(155,30,50,0.38)",
                     duration: 0.4,
                   });
                 }
@@ -296,7 +296,7 @@ export default function TestimonialsSection() {
                 const inner = cardEl.querySelector(".card-inner") as HTMLElement;
                 if (inner) {
                   gsap.to(inner, {
-                    borderColor: "rgba(201,168,152,0.14)",
+                    borderColor: "rgba(155,30,50,0.14)",
                     duration: 0.4,
                   });
                 }
@@ -305,9 +305,10 @@ export default function TestimonialsSection() {
               <div
                 className="card-inner flex flex-col border relative overflow-hidden"
                 style={{
-                  backgroundColor: "rgba(13,9,16,0.96)",
-                  borderColor: "rgba(201,168,152,0.14)",
-                  backdropFilter: "blur(12px)",
+                  backgroundColor: "rgba(255,250,246,0.98)",
+                  borderColor: "rgba(155,30,50,0.14)",
+                  backdropFilter: "blur(12px) saturate(120%)",
+                  boxShadow: "0 4px 28px rgba(44,31,34,0.07), 0 1px 8px rgba(44,31,34,0.04)",
                   padding: "clamp(2rem, 3.5vw, 3rem)",
                   gap: "var(--sp-4)",                   /* 32px — clear breathing between each element */
                 }}
@@ -317,7 +318,7 @@ export default function TestimonialsSection() {
                   className="absolute -top-3 -left-1 font-display select-none pointer-events-none"
                   style={{
                     fontSize: "9rem",
-                    color: "rgba(201,168,152,0.035)",
+                    color: "rgba(155,30,50,0.06)",
                     lineHeight: 1,
                   }}
                 >
@@ -343,7 +344,7 @@ export default function TestimonialsSection() {
                 <div
                   className="inline-flex items-center gap-2 self-start"
                   style={{
-                    border: "1px solid rgba(201,168,152,0.2)",
+                    border: "1px solid rgba(155,30,50,0.18)",
                     padding: "7px 18px",
                   }}
                 >
@@ -358,15 +359,15 @@ export default function TestimonialsSection() {
                 {/* Author */}
                 <div
                   className="flex items-center gap-4 border-t"
-                  style={{ borderColor: "rgba(201,168,152,0.1)", paddingTop: "var(--sp-3)" }}
+                  style={{ borderColor: "rgba(44,31,34,0.10)", paddingTop: "var(--sp-3)" }}
                 >
                   <div
                     className="w-9 h-9 rounded-full flex items-center justify-center border font-display italic flex-shrink-0"
                     style={{
-                      borderColor: "rgba(201,168,152,0.3)",
+                      borderColor: "rgba(155,30,50,0.28)",
                       color: "var(--color-gold)",
                       fontSize: "0.95rem",
-                      backgroundColor: "rgba(201,168,152,0.06)",
+                      backgroundColor: "rgba(155,30,50,0.06)",
                     }}
                   >
                     {t.name[0]}
@@ -374,13 +375,13 @@ export default function TestimonialsSection() {
                   <div>
                     <p
                       className="font-body text-sm"
-                      style={{ color: "var(--color-champagne)" }}
+                      style={{ color: "var(--color-ivory)" }}
                     >
                       {t.name}
                     </p>
                     <p
                       className="text-xs font-accent mt-0.5"
-                      style={{ color: "rgba(237,213,200,0.35)", fontWeight: 300 }}
+                      style={{ color: "rgba(44,31,34,0.42)", fontWeight: 300 }}
                     >
                       {t.role}
                     </p>

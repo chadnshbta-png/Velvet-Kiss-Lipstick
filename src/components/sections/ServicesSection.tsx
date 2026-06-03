@@ -185,7 +185,7 @@ export default function ServicesSection() {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(90,18,38,0.07) 0%, transparent 70%)",
+              "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(155,30,50,0.06) 0%, transparent 70%)",
           }}
         />
 
@@ -205,23 +205,24 @@ export default function ServicesSection() {
             <div
               className="relative flex flex-col border"
               style={{
-                backgroundColor: "rgba(13, 9, 16, 0.92)",
-                borderColor: `rgba(${service.accentRgb},0.18)`,
-                backdropFilter: "blur(16px)",
+                backgroundColor: "rgba(255,250,246,0.97)",
+                borderColor: `rgba(${service.accentRgb},0.22)`,
+                backdropFilter: "blur(16px) saturate(120%)",
+                boxShadow: "0 6px 36px rgba(44,31,34,0.08), 0 2px 10px rgba(44,31,34,0.04)",
                 padding: "clamp(2rem,4vw,3.5rem)",
                 minHeight: "clamp(320px, 44vh, 480px)",
               }}
               onMouseEnter={(e) => {
                 gsap.to(e.currentTarget, {
                   borderColor: service.accent,
-                  boxShadow: `0 0 60px rgba(${service.accentRgb},0.14), inset 0 0 40px rgba(${service.accentRgb},0.04)`,
+                  boxShadow: `0 12px 60px rgba(${service.accentRgb},0.14), 0 4px 20px rgba(44,31,34,0.06)`,
                   duration: 0.5,
                 });
               }}
               onMouseLeave={(e) => {
                 gsap.to(e.currentTarget, {
-                  borderColor: `rgba(${service.accentRgb},0.18)`,
-                  boxShadow: "none",
+                  borderColor: `rgba(${service.accentRgb},0.22)`,
+                  boxShadow: "0 6px 36px rgba(44,31,34,0.08), 0 2px 10px rgba(44,31,34,0.04)",
                   duration: 0.5,
                 });
               }}
@@ -276,7 +277,7 @@ export default function ServicesSection() {
               <p
                 className="font-body leading-relaxed mt-auto"
                 style={{
-                  color: "rgba(250,246,240,0.6)",
+                  color: "rgba(44,31,34,0.68)",
                   fontSize: "clamp(0.9rem, 1.2vw, 1rem)",
                   letterSpacing: "0.02em",
                   maxWidth: "40ch",
@@ -296,13 +297,13 @@ export default function ServicesSection() {
           <div
             ref={counterRef}
             className="font-accent text-xs tracking-[0.4em]"
-            style={{ color: "rgba(201,168,152,0.4)", fontWeight: 300 }}
+            style={{ color: "rgba(44,31,34,0.38)", fontWeight: 300 }}
           >
             01 / 04
           </div>
           <div
             className="w-full h-px"
-            style={{ backgroundColor: "rgba(201,168,152,0.1)" }}
+            style={{ backgroundColor: "rgba(44,31,34,0.10)" }}
           >
             <div
               ref={progressBarRef}

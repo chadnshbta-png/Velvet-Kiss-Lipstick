@@ -130,7 +130,7 @@ export default function CTASection() {
         className="absolute inset-0 gpu"
         style={{
           background:
-            "radial-gradient(ellipse 70% 55% at 50% 50%, rgba(95,18,40,0.10) 0%, transparent 70%)",
+            "radial-gradient(ellipse 70% 55% at 50% 50%, rgba(155,30,50,0.07) 0%, transparent 70%)",
         }}
       />
 
@@ -142,18 +142,18 @@ export default function CTASection() {
           width: "min(60vw, 600px)",
           height: "min(60vw, 600px)",
           borderRadius: "50%",
-          border: "1px solid rgba(201,168,152,0.06)",
+          border: "1px solid rgba(155,30,50,0.08)",
           opacity: 0,
           pointerEvents: "none",
         }}
       >
         <div
           className="absolute inset-6 rounded-full"
-          style={{ border: "1px solid rgba(201,168,152,0.04)" }}
+          style={{ border: "1px solid rgba(155,30,50,0.05)" }}
         />
         <div
           className="absolute inset-12 rounded-full"
-          style={{ border: "1px solid rgba(201,168,152,0.03)" }}
+          style={{ border: "1px solid rgba(155,30,50,0.04)" }}
         />
       </div>
 
@@ -211,7 +211,7 @@ export default function CTASection() {
                   color: "var(--color-gold)",
                   display: "block",
                   letterSpacing: "-0.03em",
-                  textShadow: "0 0 120px rgba(201,168,152,0.15)",
+                  textShadow: "0 0 120px rgba(155,30,50,0.15)",
                 }}
               >
                 {words.line2[0]}
@@ -228,7 +228,7 @@ export default function CTASection() {
                     style={{
                       fontSize: "clamp(3rem, 8vw, 9rem)",
                       lineHeight: 1,
-                      color: i === 0 ? "rgba(245,230,200,0.5)" : i === 1 ? "rgba(245,230,200,0.3)" : "rgba(245,230,200,0.15)",
+                      color: i === 0 ? "rgba(44,31,34,0.50)" : i === 1 ? "rgba(44,31,34,0.30)" : "rgba(44,31,34,0.15)",
                       display: "block",
                       letterSpacing: "-0.02em",
                     }}
@@ -251,15 +251,15 @@ export default function CTASection() {
             style={{} as React.CSSProperties}
             onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
               gsap.to(e.currentTarget, {
-                backgroundColor: "var(--color-champagne)",
-                color: "var(--color-black)",
+                backgroundColor: "var(--color-crimson)",
+                color: "#FAF6F1",
                 duration: 0.35,
               });
             }}
             onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => {
               gsap.to(e.currentTarget, {
                 backgroundColor: "var(--color-gold)",
-                color: "var(--color-black)",
+                color: "#FAF6F1",
                 duration: 0.35,
               });
             }}
@@ -273,15 +273,15 @@ export default function CTASection() {
             onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
               gsap.to(e.currentTarget, {
                 borderColor: "var(--color-gold)",
-                color: "var(--color-champagne)",
-                backgroundColor: "rgba(201,168,152,0.06)",
+                color: "var(--color-gold)",
+                backgroundColor: "rgba(155,30,50,0.05)",
                 duration: 0.35,
               });
             }}
             onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => {
               gsap.to(e.currentTarget, {
-                borderColor: "rgba(201,168,152,0.38)",
-                color: "var(--color-champagne)",
+                borderColor: "rgba(155,30,50,0.38)",
+                color: "var(--color-ivory)",
                 backgroundColor: "transparent",
                 duration: 0.35,
               });
@@ -295,13 +295,13 @@ export default function CTASection() {
         <div className="cta-line h-px w-full" style={{ background: "linear-gradient(to right, transparent, var(--color-gold), transparent)", marginTop: "clamp(4rem, 6vw, 6rem)" }} />
 
         <div className="flex items-center justify-between" style={{ marginTop: "var(--sp-4)" }}>
-          <p className="font-accent" style={{ fontSize: "var(--t-label)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,230,200,0.22)", fontWeight: 300 }}>
+          <p className="font-accent" style={{ fontSize: "var(--t-label)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(44,31,34,0.40)", fontWeight: 300 }}>
             Free worldwide shipping
           </p>
-          <p className="font-accent" style={{ fontSize: "var(--t-label)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,230,200,0.22)", fontWeight: 300 }}>
+          <p className="font-accent" style={{ fontSize: "var(--t-label)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(44,31,34,0.40)", fontWeight: 300 }}>
             Luxury packaging
           </p>
-          <p className="font-accent hidden md:block" style={{ fontSize: "var(--t-label)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(245,230,200,0.22)", fontWeight: 300 }}>
+          <p className="font-accent hidden md:block" style={{ fontSize: "var(--t-label)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(44,31,34,0.40)", fontWeight: 300 }}>
             30-day returns
           </p>
         </div>

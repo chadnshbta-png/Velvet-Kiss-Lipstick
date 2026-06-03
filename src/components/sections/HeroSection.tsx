@@ -177,7 +177,7 @@ export default function HeroSection() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse at center, transparent 30%, rgba(7,4,7,0.65) 100%)",
+            "radial-gradient(ellipse at center, transparent 30%, rgba(20,10,12,0.55) 100%)",
         }}
       />
 
@@ -186,7 +186,7 @@ export default function HeroSection() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "linear-gradient(to bottom, transparent 70%, rgba(7,4,7,0.55) 100%)",
+            "linear-gradient(to bottom, transparent 70%, rgba(250,246,241,0.70) 100%)",
         }}
       />
 
@@ -217,10 +217,10 @@ export default function HeroSection() {
             className="font-display italic leading-none"
             style={{
               fontSize: "var(--t-hero)",
-              color: "var(--color-ivory)",
+              color: "#FAF6F1",
               letterSpacing: "-0.02em",
               lineHeight: 0.9,
-              textShadow: "0 0 100px rgba(201,168,152,0.12)",
+              textShadow: "0 0 100px rgba(155,30,50,0.18)",
             }}
           >
             Velvet
@@ -235,7 +235,7 @@ export default function HeroSection() {
             className="font-accent uppercase tracking-[0.4em]"
             style={{
               fontSize: "var(--t-caption)",
-              color: "var(--color-blush)",
+              color: "rgba(240,213,216,0.88)",
               fontWeight: 200,
             }}
           >
@@ -250,18 +250,19 @@ export default function HeroSection() {
         <div ref={ctaRef} className="mt-14">
           <button
             className="vk-btn vk-btn-md vk-btn-outline"
+            style={{ color: "#FAF6F1", borderColor: "rgba(250,246,241,0.40)" }}
             onMouseEnter={(e) => {
               gsap.to(e.currentTarget, {
                 borderColor: "var(--color-gold)",
-                color: "var(--color-black)",
+                color: "#FAF6F1",
                 backgroundColor: "var(--color-gold)",
                 duration: 0.38,
               });
             }}
             onMouseLeave={(e) => {
               gsap.to(e.currentTarget, {
-                borderColor: "rgba(201,168,152,0.38)",
-                color: "var(--color-champagne)",
+                borderColor: "rgba(250,246,241,0.40)",
+                color: "#FAF6F1",
                 backgroundColor: "transparent",
                 duration: 0.38,
               });
@@ -279,7 +280,7 @@ export default function HeroSection() {
       >
         <p
           className="text-xs tracking-[0.2em] uppercase font-accent"
-          style={{ color: "rgba(237,213,200,0.35)", fontWeight: 300 }}
+          style={{ color: "rgba(250,246,241,0.45)", fontWeight: 300 }}
         >
           Scroll to explore
         </p>
@@ -302,7 +303,7 @@ export default function HeroSection() {
 
         <p
           className="text-xs tracking-[0.2em] uppercase font-accent hidden md:block"
-          style={{ color: "rgba(237,213,200,0.35)", fontWeight: 300 }}
+          style={{ color: "rgba(250,246,241,0.45)", fontWeight: 300 }}
         >
           Luxury Lipstick
         </p>
@@ -311,14 +312,14 @@ export default function HeroSection() {
       {/* Corner decorations */}
       <div
         className="absolute top-28 left-8 hidden md:block"
-        style={{ color: "rgba(201,168,152,0.25)" }}
+        style={{ color: "rgba(155,30,50,0.30)" }}
       >
         <div className="w-14 h-px" style={{ backgroundColor: "currentColor" }} />
         <div className="w-px h-14" style={{ backgroundColor: "currentColor" }} />
       </div>
       <div
         className="absolute top-28 right-8 hidden md:block"
-        style={{ color: "rgba(201,168,152,0.25)" }}
+        style={{ color: "rgba(155,30,50,0.30)" }}
       >
         <div className="w-14 h-px ml-auto" style={{ backgroundColor: "currentColor" }} />
         <div className="w-px h-14 ml-auto" style={{ backgroundColor: "currentColor" }} />

@@ -99,7 +99,7 @@ export default function Footer() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 15% 90%, rgba(80,14,30,0.07) 0%, transparent 65%)",
+            "radial-gradient(ellipse 80% 60% at 15% 90%, rgba(155,30,50,0.06) 0%, transparent 65%)",
         }}
       />
 
@@ -109,7 +109,7 @@ export default function Footer() {
         className="h-px w-full"
         style={{
           background:
-            "linear-gradient(to right, var(--color-gold), rgba(201,168,152,0.2), transparent)",
+            "linear-gradient(to right, var(--color-gold), rgba(155,30,50,0.15), transparent)",
         }}
       />
 
@@ -144,7 +144,7 @@ export default function Footer() {
               fontSize: "var(--t-label)",
               letterSpacing: "0.5em",
               textTransform: "uppercase",
-              color: "rgba(201,168,152,0.38)",
+              color: "rgba(44,31,34,0.40)",
               fontWeight: 300,
               marginTop: "var(--sp-3)",
             }}
@@ -189,7 +189,7 @@ export default function Footer() {
                       className="font-body"
                       style={{
                         fontSize: "var(--t-body)",
-                        color: "rgba(250,246,240,0.38)",
+                        color: "rgba(44,31,34,0.50)",
                         display: "block",
                         letterSpacing: "0.02em",
                       }}
@@ -202,7 +202,7 @@ export default function Footer() {
                       }
                       onMouseLeave={(e) =>
                         gsap.to(e.currentTarget, {
-                          color: "rgba(250,246,240,0.38)",
+                          color: "rgba(44,31,34,0.50)",
                           x: 0,
                           duration: 0.3,
                         })
@@ -227,7 +227,7 @@ export default function Footer() {
             className="font-display italic select-none pointer-events-none"
             style={{
               fontSize: "clamp(4rem, 14vw, 16rem)",
-              color: "rgba(201,168,152,0.035)",
+              color: "rgba(155,30,50,0.05)",
               lineHeight: 0.85,
               letterSpacing: "-0.04em",
               whiteSpace: "nowrap",
@@ -250,7 +250,7 @@ export default function Footer() {
           {/* Top rule */}
           <div
             className="h-px w-full"
-            style={{ backgroundColor: "rgba(201,168,152,0.08)" }}
+            style={{ backgroundColor: "rgba(44,31,34,0.10)" }}
           />
 
           <div
@@ -267,7 +267,7 @@ export default function Footer() {
               className="font-accent"
               style={{
                 fontSize: "var(--t-label)",
-                color: "rgba(245,230,200,0.22)",
+                color: "rgba(44,31,34,0.40)",
                 fontWeight: 300,
                 letterSpacing: "0.12em",
               }}
@@ -285,7 +285,7 @@ export default function Footer() {
                     fontSize: "var(--t-label)",
                     letterSpacing: "0.22em",
                     textTransform: "uppercase",
-                    color: "rgba(245,230,200,0.22)",
+                    color: "rgba(44,31,34,0.40)",
                     fontWeight: 300,
                   }}
                   onMouseEnter={(e) =>
@@ -293,7 +293,7 @@ export default function Footer() {
                   }
                   onMouseLeave={(e) =>
                     gsap.to(e.currentTarget, {
-                      color: "rgba(245,230,200,0.22)",
+                      color: "rgba(44,31,34,0.40)",
                       duration: 0.3,
                     })
                   }
@@ -307,7 +307,7 @@ export default function Footer() {
               className="font-accent"
               style={{
                 fontSize: "var(--t-label)",
-                color: "rgba(245,230,200,0.22)",
+                color: "rgba(44,31,34,0.40)",
                 fontWeight: 300,
                 letterSpacing: "0.12em",
               }}

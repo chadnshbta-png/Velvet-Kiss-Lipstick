@@ -12,18 +12,18 @@
   --font-accent: "Montserrat", sans-serif;
 
   /* ── Color palette — luxury beauty ── */
-  --color-black:     #070407;   /* near-pure warm black */
-  --color-deep:      #0C0810;   /* dark plum-charcoal, used for stage BGs */
-  --color-plum:      #160D1A;   /* subtle plum overlay */
-  --color-burgundy:  #2A0E1C;   /* dark burgundy accent */
-  --color-crimson:   #8b0000;
-  --color-rose:      #c41e3a;
-  --color-mauve:     #7A4558;
-  --color-blush:     #e8b4b8;
-  --color-gold:      #C9A898;   /* warm nude rose — primary accent */
-  --color-champagne: #EDD5C8;   /* peach-nude */
-  --color-ivory:     #faf6f0;
-  --color-pearl:     #f8f4ee;
+  --color-black:     #FAF6F1;   /* primary page bg — soft warm ivory */
+  --color-deep:      #F2E6DA;   /* section stage bg — warm cream */
+  --color-plum:      #EDE0D4;   /* deeper cream overlay */
+  --color-burgundy:  #E5D4C8;   /* warm pale nude */
+  --color-crimson:   #7D1828;   /* deepest velvet red */
+  --color-rose:      #B52240;   /* brand red — vivid lipstick red */
+  --color-mauve:     #C4647A;   /* soft muted rose */
+  --color-blush:     #B8606E;   /* muted rose accent */
+  --color-gold:      #9B1E32;   /* PRIMARY ACCENT — velvet red */
+  --color-champagne: #C8A898;   /* warm champagne/nude */
+  --color-ivory:     #2C1F22;   /* primary text — deep warm charcoal */
+  --color-pearl:     #5C4049;   /* secondary text */
 
   /* ── Spacing scale ── */
   --sp-1:  0.5rem;    /*   8px */
@@ -158,7 +158,7 @@ html.lenis, html.lenis body { height: auto; }
   font-family: var(--font-display);
   font-style: italic;
   font-size: clamp(2rem, 3.5vw, 3.5rem);
-  color: rgba(201, 168, 152, 0.18);
+  color: rgba(155, 30, 50, 0.18);
   line-height: 1;
 }
 
@@ -204,21 +204,21 @@ html.lenis, html.lenis body { height: auto; }
 
 .vk-btn-primary {
   background-color: var(--color-gold);
-  color: var(--color-black);
+  color: #FAF6F1;
   font-weight: 500;
   border: 1px solid var(--color-gold);
 }
 
 .vk-btn-outline {
   background-color: transparent;
-  color: var(--color-champagne);
-  border: 1px solid rgba(201, 168, 152, 0.38);
+  color: var(--color-ivory);
+  border: 1px solid rgba(155, 30, 50, 0.38);
 }
 
 .vk-btn-ghost {
   background-color: transparent;
   color: var(--color-gold);
-  border: 1px solid rgba(201, 168, 152, 0.45);
+  border: 1px solid rgba(155, 30, 50, 0.38);
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -229,14 +229,14 @@ html.lenis, html.lenis body { height: auto; }
 .font-accent  { font-family: var(--font-accent); }
 
 .text-gradient-gold {
-  background: linear-gradient(135deg, var(--color-mauve) 0%, var(--color-champagne) 45%, var(--color-gold) 100%);
+  background: linear-gradient(135deg, var(--color-crimson) 0%, var(--color-gold) 45%, var(--color-rose) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .text-gradient-rose {
-  background: linear-gradient(135deg, var(--color-rose) 0%, var(--color-blush) 50%, var(--color-crimson) 100%);
+  background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-mauve) 50%, var(--color-blush) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

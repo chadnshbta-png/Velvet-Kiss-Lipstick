@@ -59,7 +59,7 @@ export default function Navbar() {
           if (ul) gsap.to(ul, { scaleX: 1, duration: 0.42, ease: "power3.out" });
         };
         const onLeave = () => {
-          gsap.to(link, { color: "rgba(250,246,240,0.46)", duration: 0.28 });
+          gsap.to(link, { color: "rgba(44,31,34,0.46)", duration: 0.28 });
           if (ul) gsap.to(ul, { scaleX: 0, duration: 0.32, ease: "power2.in" });
         };
 
@@ -139,10 +139,10 @@ export default function Navbar() {
           ref={navBgRef}
           style={{
             position: "absolute", inset: 0, opacity: 0,
-            backgroundColor: "rgba(7, 4, 7, 0.82)",
-            backdropFilter: "blur(22px) saturate(160%)",
-            WebkitBackdropFilter: "blur(22px) saturate(160%)",
-            borderBottom: "1px solid rgba(201, 168, 152, 0.09)",
+            backgroundColor: "rgba(250, 246, 241, 0.92)",
+            backdropFilter: "blur(22px) saturate(140%)",
+            WebkitBackdropFilter: "blur(22px) saturate(140%)",
+            borderBottom: "1px solid rgba(155, 30, 50, 0.10)",
             pointerEvents: "none",
           }}
         />
@@ -208,7 +208,7 @@ export default function Navbar() {
                     fontWeight: 300,
                     letterSpacing: "0.32em",
                     textTransform: "uppercase",
-                    color: "rgba(250,246,240,0.46)",
+                    color: "rgba(44,31,34,0.46)",
                     textDecoration: "none",
                     display: "block",
                     paddingBottom: "4px",
@@ -250,7 +250,7 @@ export default function Navbar() {
               onMouseEnter={(e) =>
                 gsap.to(e.currentTarget, {
                   backgroundColor: "var(--color-gold)",
-                  color: "var(--color-black)",
+                  color: "#FAF6F1",
                   borderColor: "var(--color-gold)",
                   duration: 0.35,
                 })
@@ -259,7 +259,7 @@ export default function Navbar() {
                 gsap.to(e.currentTarget, {
                   backgroundColor: "transparent",
                   color: "var(--color-gold)",
-                  borderColor: "rgba(201,168,152,0.45)",
+                  borderColor: "rgba(155,30,50,0.38)",
                   duration: 0.35,
                 })
               }
@@ -337,7 +337,7 @@ export default function Navbar() {
           style={{
             position: "absolute", inset: 0, pointerEvents: "none",
             background:
-              "radial-gradient(ellipse 80% 60% at 92% 8%, rgba(80,14,30,0.10) 0%, transparent 65%)",
+              "radial-gradient(ellipse 80% 60% at 92% 8%, rgba(155,30,50,0.07) 0%, transparent 65%)",
           }}
         />
 
@@ -398,7 +398,7 @@ export default function Navbar() {
           style={{
             marginTop: "clamp(2rem, 7vh, 5rem)",
             paddingTop: "clamp(1.5rem, 4vh, 2.5rem)",
-            borderTop: "1px solid rgba(201,168,152,0.12)",
+            borderTop: "1px solid rgba(155,30,50,0.12)",
             display: "flex",
             flexDirection: "column",
             gap: "var(--sp-5)",
@@ -418,7 +418,7 @@ export default function Navbar() {
               fontSize: "var(--t-label)",
               letterSpacing: "0.5em",
               textTransform: "uppercase",
-              color: "rgba(201,168,152,0.26)",
+              color: "rgba(44,31,34,0.28)",
               fontWeight: 300,
             }}
           >

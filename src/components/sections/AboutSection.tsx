@@ -194,10 +194,10 @@ export default function AboutSection() {
       <div className="font-display" style={{ fontSize: "clamp(1.8rem, 3vw, 2.8rem)", color: "var(--color-gold)", lineHeight: 1 }}>
         {value}
       </div>
-      <p className="font-accent" style={{ fontSize: "var(--t-caption)", color: "var(--color-blush)", fontWeight: 300, letterSpacing: "0.12em", marginTop: "0.3rem", marginBottom: "0.25rem" }}>
+      <p className="font-accent" style={{ fontSize: "var(--t-caption)", color: "var(--color-mauve)", fontWeight: 300, letterSpacing: "0.12em", marginTop: "0.3rem", marginBottom: "0.25rem" }}>
         {unit}
       </p>
-      <p className="font-accent" style={{ fontSize: "var(--t-label)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(237,213,200,0.35)", fontWeight: 300 }}>
+      <p className="font-accent" style={{ fontSize: "var(--t-label)", letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(44,31,34,0.40)", fontWeight: 300 }}>
         {label}
       </p>
     </div>
@@ -247,17 +247,17 @@ export default function AboutSection() {
               style={{
                 marginBottom: i < CONTENT_BLOCKS.length - 1 ? "var(--sp-7)" : "var(--sp-8)",
                 paddingBottom: i < CONTENT_BLOCKS.length - 1 ? "var(--sp-7)" : 0,
-                borderBottom: i < CONTENT_BLOCKS.length - 1 ? "1px solid rgba(201,168,152,0.08)" : "none",
+                borderBottom: i < CONTENT_BLOCKS.length - 1 ? "1px solid rgba(44,31,34,0.10)" : "none",
               }}
             >
               <p className="font-accent" style={{ fontSize: "var(--t-label)", letterSpacing: "0.4em", textTransform: "uppercase", color: block.accent, fontWeight: 300, marginBottom: "var(--sp-2)" }}>
                 {block.label}
               </p>
-              <h3 className="font-display italic" style={{ fontSize: "clamp(1.8rem, 6vw, 2.4rem)", color: "var(--color-ivory)", lineHeight: 1.1, letterSpacing: "-0.01em", marginBottom: "var(--sp-3)" }}>
+              <h3 className="font-display italic" style={{ fontSize: "clamp(1.8rem, 6vw, 2.4rem)", color: "var(--color-ivory)", lineHeight: 1.1, letterSpacing: "-0.01em", marginBottom: "var(--sp-3)", fontWeight: 600 }}>
                 {block.heading}
               </h3>
               <div style={{ width: "2.5rem", height: "1px", backgroundColor: block.accent, opacity: 0.45, marginBottom: "var(--sp-3)" }} />
-              <p className="font-body" style={{ color: "rgba(250,246,240,0.68)", fontSize: "var(--t-body)", letterSpacing: "0.02em", lineHeight: 1.75, maxWidth: "42ch" }}>
+              <p className="font-body" style={{ color: "rgba(44,31,34,0.70)", fontSize: "var(--t-body)", letterSpacing: "0.02em", lineHeight: 1.75, maxWidth: "42ch" }}>
                 {block.body}
               </p>
             </div>
@@ -265,7 +265,7 @@ export default function AboutSection() {
 
           {/* Stats */}
           <div style={{
-            borderTop: "1px solid rgba(201,168,152,0.1)",
+            borderTop: "1px solid rgba(44,31,34,0.10)",
             paddingTop: "var(--sp-4)",
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
@@ -333,12 +333,12 @@ export default function AboutSection() {
                     {block.heading}
                   </h3>
                   <div className="mb-6 w-16 h-px" style={{ backgroundColor: block.accent, opacity: 0.5 }} />
-                  <p className="font-body leading-relaxed" style={{ color: "rgba(250,246,240,0.7)", fontSize: "clamp(0.9rem,1.2vw,1.05rem)", letterSpacing: "0.02em", maxWidth: "38ch" }}>
+                  <p className="font-body leading-relaxed" style={{ color: "rgba(44,31,34,0.72)", fontSize: "clamp(0.9rem,1.2vw,1.05rem)", letterSpacing: "0.02em", maxWidth: "38ch" }}>
                     {block.body}
                   </p>
                   <div className="flex items-center gap-2 mt-8">
                     {CONTENT_BLOCKS.map((_, j) => (
-                      <div key={j} style={{ width: j === i ? "2rem" : "0.4rem", height: "1px", backgroundColor: j === i ? block.accent : "rgba(201,168,152,0.2)", transition: "width 0.4s" }} />
+                      <div key={j} style={{ width: j === i ? "2rem" : "0.4rem", height: "1px", backgroundColor: j === i ? block.accent : "rgba(44,31,34,0.15)", transition: "width 0.4s" }} />
                     ))}
                   </div>
                 </div>
@@ -347,7 +347,7 @@ export default function AboutSection() {
 
             {/* Stats */}
             <div ref={statsRef} className="grid grid-cols-3 border-t" style={{
-              borderColor: "rgba(201,168,152,0.1)",
+              borderColor: "rgba(44,31,34,0.10)",
               paddingTop: "clamp(1.5rem,3vh,2.5rem)",
               gap: "clamp(1rem,3vw,2.5rem)",
               marginTop: "clamp(1.5rem,3vh,2rem)",
@@ -363,11 +363,11 @@ export default function AboutSection() {
                 <source src="/video/Create_a_single_continuous_sho.mp4" type="video/mp4" />
                 <source src="/video/Create_a_vertical_luxury (1).mp4" type="video/mp4" />
               </video>
-              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, var(--color-black) 0%, rgba(8,5,8,0.5) 18%, transparent 40%)", pointerEvents: "none" }} />
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, var(--color-black) 0%, rgba(250,246,241,0.55) 18%, transparent 40%)", pointerEvents: "none" }} />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, var(--color-black) 0%, transparent 25%)", pointerEvents: "none" }} />
-              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(46,16,32,0.25) 0%, transparent 60%)", mixBlendMode: "multiply", pointerEvents: "none" }} />
+              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(155,30,50,0.07) 0%, transparent 60%)", mixBlendMode: "multiply", pointerEvents: "none" }} />
             </div>
-            <div className="absolute right-5 top-1/2 hidden lg:block" style={{ writingMode: "vertical-rl", textOrientation: "mixed", color: "rgba(201,168,152,0.25)", fontSize: "0.5rem", letterSpacing: "0.45em", textTransform: "uppercase", fontFamily: "var(--font-accent)", fontWeight: 300, transform: "rotate(180deg) translateY(50%)", zIndex: 10 }}>
+            <div className="absolute right-5 top-1/2 hidden lg:block" style={{ writingMode: "vertical-rl", textOrientation: "mixed", color: "rgba(155,30,50,0.28)", fontSize: "0.5rem", letterSpacing: "0.45em", textTransform: "uppercase", fontFamily: "var(--font-accent)", fontWeight: 300, transform: "rotate(180deg) translateY(50%)", zIndex: 10 }}>
               The Story of Velvet Kiss
             </div>
           </div>

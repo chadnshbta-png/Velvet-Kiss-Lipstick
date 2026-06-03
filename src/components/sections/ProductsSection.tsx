@@ -120,7 +120,7 @@ export default function ProductsSection() {
             dotRefs.current.forEach((dot, j) => {
               if (!dot) return;
               gsap.to(dot, {
-                backgroundColor: j === i ? "var(--color-gold)" : "rgba(201,168,152,0.18)",
+                backgroundColor: j === i ? "var(--color-gold)" : "rgba(44,31,34,0.18)",
                 width: j === i ? "1.5rem" : "0.375rem",
                 duration: 0.4,
               });
@@ -189,7 +189,7 @@ export default function ProductsSection() {
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse 65% 55% at 50% 40%, rgba(80,16,34,0.07) 0%, transparent 70%)",
+              "radial-gradient(ellipse 65% 55% at 50% 40%, rgba(155,30,50,0.06) 0%, transparent 70%)",
           }}
         />
 
@@ -217,8 +217,9 @@ export default function ProductsSection() {
               <div
                 className="w-full h-full flex flex-col overflow-hidden border"
                 style={{
-                  backgroundColor: "var(--color-deep)",
-                  borderColor: `rgba(${product.shadeRgb},0.25)`,
+                  backgroundColor: "rgba(255,250,246,0.98)",
+                  borderColor: `rgba(${product.shadeRgb},0.28)`,
+                  boxShadow: "0 4px 24px rgba(44,31,34,0.08), 0 1px 8px rgba(44,31,34,0.04)",
                 }}
               >
                 {/* Image */}
@@ -255,7 +256,7 @@ export default function ProductsSection() {
                       className="w-4 h-4 rounded-full border"
                       style={{
                         backgroundColor: product.shade,
-                        borderColor: "rgba(201,168,152,0.4)",
+                        borderColor: "rgba(44,31,34,0.22)",
                       }}
                     />
                   </div>
@@ -265,7 +266,7 @@ export default function ProductsSection() {
                     className="absolute top-4 left-5 font-display italic select-none"
                     style={{
                       fontSize: "3.5rem",
-                      color: "rgba(201,168,152,0.08)",
+                      color: "rgba(44,31,34,0.07)",
                       lineHeight: 1,
                     }}
                   >
@@ -302,7 +303,7 @@ export default function ProductsSection() {
                     <p
                       className="text-xs tracking-[0.2em] uppercase font-accent"
                       style={{
-                        color: "rgba(250,246,240,0.35)",
+                        color: "rgba(44,31,34,0.45)",
                         fontWeight: 300,
                       }}
                     >
@@ -312,7 +313,7 @@ export default function ProductsSection() {
                       className="font-display"
                       style={{
                         fontSize: "1.25rem",
-                        color: "var(--color-champagne)",
+                        color: "var(--color-gold)",
                       }}
                     >
                       {product.price}
@@ -339,7 +340,7 @@ export default function ProductsSection() {
                   backgroundColor:
                     i === 0
                       ? "var(--color-gold)"
-                      : "rgba(201,168,152,0.18)",
+                      : "rgba(44,31,34,0.18)",
                   transition: "all 0.4s",
                 }}
               />
@@ -350,7 +351,7 @@ export default function ProductsSection() {
             className="font-display italic text-right"
             style={{
               fontSize: "0.75rem",
-              color: "rgba(201,168,152,0.4)",
+              color: "rgba(44,31,34,0.40)",
               writingMode: "vertical-rl",
               textOrientation: "mixed",
               transform: "rotate(180deg)",

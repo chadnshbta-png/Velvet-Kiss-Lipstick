@@ -37,39 +37,39 @@ interface Blob {
 }
 
 const BLOBS: Blob[] = [
-  /* 1 — upper-left warm burgundy */
+  /* 1 — upper-left soft velvet rose glow */
   {
     left: "-14%", top: "-22%",
     width: "70vw", height: "65vw",
-    color: "rgba(108, 22, 44, 0.10)",
+    color: "rgba(155, 30, 50, 0.07)",
     driftX: 52, driftY: 38, durX: 27, durY: 22, delay: 0,
   },
-  /* 2 — upper-right cool plum */
+  /* 2 — upper-right warm champagne warmth */
   {
     left: "62%", top: "-18%",
     width: "64vw", height: "58vw",
-    color: "rgba(62, 12, 42, 0.08)",
+    color: "rgba(200, 168, 152, 0.06)",
     driftX: -46, driftY: 54, durX: 35, durY: 29, delay: 9,
   },
-  /* 3 — lower-left ambient rose — largest, most diffuse */
+  /* 3 — lower-left ambient blush — largest, most diffuse */
   {
     left: "8%", top: "58%",
     width: "80vw", height: "62vw",
-    color: "rgba(120, 24, 52, 0.06)",
+    color: "rgba(180, 96, 110, 0.05)",
     driftX: 34, driftY: -42, durX: 44, durY: 37, delay: 18,
   },
-  /* 4 — mid-right deep plum */
+  /* 4 — mid-right deep rose accent */
   {
     left: "68%", top: "28%",
     width: "52vw", height: "48vw",
-    color: "rgba(56, 10, 34, 0.09)",
+    color: "rgba(155, 30, 50, 0.06)",
     driftX: -38, driftY: 44, durX: 23, durY: 20, delay: 5,
   },
-  /* 5 — lower-right warm nude accent */
+  /* 5 — lower-right nude warmth */
   {
     left: "55%", top: "65%",
     width: "46vw", height: "44vw",
-    color: "rgba(92, 18, 44, 0.06)",
+    color: "rgba(210, 180, 165, 0.05)",
     driftX: 42, driftY: -28, durX: 31, durY: 26, delay: 13,
   },
 ];
