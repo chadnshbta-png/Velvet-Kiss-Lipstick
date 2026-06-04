@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import { registerGSAP } from "@/lib/gsap-config";
 import { useLenis } from "@/hooks/useLenis";
-import CustomCursor from "@/components/ui/CustomCursor";
 import AmbientBackground from "@/components/ui/AmbientBackground";
 import Navbar from "@/components/layout/Navbar";
 
@@ -21,7 +20,6 @@ export default function ClientProviders({
   return (
     <>
       <AmbientBackground />
-      <CustomCursor />
       <Navbar />
       <main>{children}</main>
     </>

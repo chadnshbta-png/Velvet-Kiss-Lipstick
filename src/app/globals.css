@@ -73,7 +73,6 @@ body {
   color: var(--color-ivory);
   font-family: var(--font-body);
   overflow-x: hidden;
-  cursor: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -102,26 +101,6 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 .lenis.lenis-stopped { overflow: hidden; }
 
-/* ═══════════════════════════════════════════════════════
-   CURSOR
-═══════════════════════════════════════════════════════ */
-.cursor-dot {
-  pointer-events: none;
-  position: fixed;
-  top: 0; left: 0;
-  z-index: 9999;
-  mix-blend-mode: difference;
-  transform: translate(-50%, -50%);
-}
-
-.cursor-ring {
-  pointer-events: none;
-  position: fixed;
-  top: 0; left: 0;
-  z-index: 9998;
-  transform: translate(-50%, -50%);
-  transition: width 0.3s var(--ease-velvet), height 0.3s var(--ease-velvet);
-}
 
 /* ═══════════════════════════════════════════════════════
    LAYOUT UTILITIES
@@ -189,7 +168,6 @@ html.lenis, html.lenis body { height: auto; }
   font-weight: 300;
   letter-spacing: 0.44em;
   text-transform: uppercase;
-  cursor: none;
   position: relative;
   overflow: hidden;
   white-space: nowrap;

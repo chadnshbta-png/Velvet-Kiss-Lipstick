@@ -6,7 +6,7 @@ import { ScrollTrigger } from "@/lib/gsap-config";
 
 const TOTAL_FRAMES = 240;
 const FRAME_PATH = (i: number) =>
-  `/frame/First-${String(i).padStart(4, "0")}.png`;
+  `/frame/First-${String(i).padStart(4, "0")}.webp`;
 
 // Text reveals at ~78–97% of hero scroll progress (near frame 226)
 
